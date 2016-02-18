@@ -1,3 +1,5 @@
+const {Message} = Antd
+
 class $CreateNote extends React.Component {
   constructor(props) {
     super(props)
@@ -7,7 +9,7 @@ class $CreateNote extends React.Component {
     e.preventDefault()
     if (!this.state.buttonDisabled) {
       this.setState({buttonDisabled: true})
-      Notes.insert({name: '无标题'}, (err, result) => {
+      Meteor.call('createNote', (err, result) => {
         this.setState({buttonDisabled: false})
         if (err) {
           Message.error('新建文档失败，请等待一会再试！')

@@ -16,7 +16,7 @@ Package.onUse(function(api) {
 
   api.addFiles('.npm/package/node_modules/codemirror/lib/codemirror.css', 'client');
 
-  api.export('Codemirror');
+  api.export('CodeMirror');
 });
 
 

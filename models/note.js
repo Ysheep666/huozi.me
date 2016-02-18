@@ -1,7 +1,17 @@
 Notes = new Mongo.Collection('notes')
 
 Notes.attachSchema(new SimpleSchema({
+  _id: {
+    type: String,
+  },
   name: {
+    type: String,
+  },
+  checkpoint: {
+    type: Object,
+    optional: true,
+  },
+  createdByUserId: {
     type: String,
   },
   authorizedUsers: {
@@ -10,12 +20,6 @@ Notes.attachSchema(new SimpleSchema({
   },
   'authorizedUsers.$': {
     type: String,
-  },
-  createdByUserId: {
-    type: String,
-    autoValue() {
-      return this.userId
-    },
   },
   createdAt: {
     type: Date,
@@ -31,25 +35,12 @@ Notes.attachSchema(new SimpleSchema({
   },
   updatedAt: {
     type: Date,
+    optional: true,
+    denyInsert: true,
     autoValue() {
       if (this.isUpdate) {
         return new Date()
       }
     },
-    denyInsert: true,
-    optional: true,
   },
 }))
-
-Notes.allow({
-  insert(userId) {
-    return !!userId
-  },
-  update(userId, doc) {
-    return userId && userId == doc.createdByUserId
-  },
-  remove(userId, doc) {
-    return userId && userId == doc.createdByUserId
-  },
-  fetch: ['createdByUserId'],
-})

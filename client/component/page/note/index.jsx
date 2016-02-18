@@ -6,7 +6,7 @@ class $Note extends React.Component {
       <QueueAnim className="note">
         <div className="note-wrap" key="note">
           detail
-          <Editor/>
+          <Editor noteId={this.props.params.id}/>
         </div>
       </QueueAnim>
     )
