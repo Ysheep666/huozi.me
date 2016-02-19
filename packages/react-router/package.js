@@ -15,7 +15,7 @@ Package.onUse(function(api) {
     'react-router.browserify.js'
   ], 'client');
 
-  api.export('ReactRouter');
+  api.export('ReactRouter', 'client');
 });
 
 

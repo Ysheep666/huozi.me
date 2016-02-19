@@ -1,5 +1,5 @@
-if (typeof wilddog === 'undefined' || wilddog === null) {
-  wilddog = {};
+if (typeof wildpad === 'undefined') {
+  wildpad = {}
 }
 
 wildpad.TextOperation = (function () {

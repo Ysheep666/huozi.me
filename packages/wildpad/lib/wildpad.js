@@ -1,4 +1,6 @@
-var wildpad = wildpad || { };
+if (typeof wildpad === 'undefined') {
+  wildpad = {}
+}
 
 wildpad.Wildpad = (function(global) {
   if (!wildpad.RichTextCodeMirrorAdapter) {
@@ -14,8 +16,6 @@ wildpad.Wildpad = (function(global) {
   var ATTR = wildpad.AttributeConstants;
   var utils = wildpad.utils;
   var LIST_TYPE = wildpad.LineFormatting.LIST_TYPE;
-  var CodeMirror = global.CodeMirror;
-  var ace = global.ace;
 
   function Wildpad(ref, place, options) {
     if (!(this instanceof Wildpad)) { return new Wildpad(ref, place, options); }

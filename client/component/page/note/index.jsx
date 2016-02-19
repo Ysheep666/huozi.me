@@ -1,3 +1,4 @@
+const {Link} = ReactRouter
 const {QueueAnim} = Antd
 
 class $Note extends React.Component {
@@ -5,8 +6,8 @@ class $Note extends React.Component {
     return (
       <QueueAnim className="note">
         <div className="note-wrap" key="note">
-          detail
-          <Editor noteId={this.props.params.id}/>
+          detail<Link to="/">default</Link>
+          <Editor id={this.props.params.id}/>
         </div>
       </QueueAnim>
     )

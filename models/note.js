@@ -7,10 +7,6 @@ Notes.attachSchema(new SimpleSchema({
   name: {
     type: String,
   },
-  checkpoint: {
-    type: Object,
-    optional: true,
-  },
   createdByUserId: {
     type: String,
   },

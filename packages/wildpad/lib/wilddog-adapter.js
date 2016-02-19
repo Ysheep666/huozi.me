@@ -1,4 +1,6 @@
-var wildpad = wildpad || { };
+if (typeof wildpad === 'undefined') {
+  wildpad = {}
+}
 
 wildpad.WilddogAdapter = (function (global) {
 
@@ -75,8 +77,7 @@ wildpad.WilddogAdapter = (function (global) {
     this.removeWilddogCallbacks_();
 
     if (this.userRef_) {
-      this.userRef_.child('cursor').remove();
-      this.userRef_.child('color').remove();
+      this.userRef_.remove();
     }
 
     this.ref_ = null;

@@ -1,9 +1,9 @@
-if (typeof wilddog === 'undefined' || wilddog === null) {
-  wilddog = {};
+if (typeof wildpad === 'undefined') {
+  wildpad = {}
 }
 
-wilddog.EntityManager = (function () {
-  var utils = wilddog.utils;
+wildpad.EntityManager = (function () {
+  var utils = wildpad.utils;
 
   function EntityManager() {
     this.entities_ = {};
@@ -37,8 +37,8 @@ wilddog.EntityManager = (function () {
   }
 
   EntityManager.prototype.register = function(type, options) {
-    wilddog.utils.assert(options.render, "Entity options should include a 'render' function!");
-    wilddog.utils.assert(options.fromElement, "Entity options should include a 'fromElement' function!");
+    wildpad.utils.assert(options.render, "Entity options should include a 'render' function!");
+    wildpad.utils.assert(options.fromElement, "Entity options should include a 'fromElement' function!");
     this.entities_[type] = options;
   };
 

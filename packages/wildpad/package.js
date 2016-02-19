@@ -7,6 +7,8 @@ Package.describe({
 
 
 Package.onUse(function(api) {
+  api.use(['started:wilddog']);
+
   api.addFiles([
     'lib/utils.js',
     'lib/span.js',
@@ -37,5 +39,5 @@ Package.onUse(function(api) {
     'lib/wildpad.js'
   ], 'client');
 
-  api.export('wildpad');
+  api.export('wildpad', 'client');
 });

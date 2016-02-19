@@ -38,7 +38,7 @@ Package.onUse(function(api) {
   api.addFiles(styles, 'client', {isImport: true});
   api.addFiles('style/index.less', 'client');
 
-  api.export('Antd');
+  api.export('Antd', 'client');
 });
 
 

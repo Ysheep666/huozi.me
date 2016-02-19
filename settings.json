@@ -1,0 +1,13 @@
+{
+  "wilddog": {
+    "name": "Started Dev",
+    "url": "https://started-dev.wilddogio.com",
+    "secret": "dVxSsppwdZl8FRvxETnVEOUp6ni56Q2VnMXEEPnQ"
+  },
+  "public": {
+    "wilddog": {
+      "name": "Started Dev",
+      "url": "https://started-dev.wilddogio.com"
+    }
+  }
+}

@@ -1,8 +1,8 @@
-if (typeof wilddog === 'undefined' || wilddog === null) {
-  wilddog = {};
+if (typeof wildpad === 'undefined') {
+  wildpad = {}
 }
 
-wilddog.Client = (function () {
+wildpad.Client = (function () {
   'use strict';
 
   // Client constructor

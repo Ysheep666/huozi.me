@@ -9,9 +9,9 @@ class $CreateNote extends React.Component {
     e.preventDefault()
     if (!this.state.buttonDisabled) {
       this.setState({buttonDisabled: true})
-      Meteor.call('createNote', (err, result) => {
+      Meteor.call('createNote', (error, result) => {
         this.setState({buttonDisabled: false})
-        if (err) {
+        if (error) {
           Message.error('新建文档失败，请等待一会再试！')
         } else {
           this.context.router.replace('/notes/' + result)

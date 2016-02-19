@@ -1,14 +1,14 @@
-if (typeof wilddog === 'undefined' || wilddog === null) {
-  wilddog = {};
+if (typeof wildpad === 'undefined') {
+  wildpad = {}
 }
 
-wilddog.EditorClient = (function () {
+wildpad.EditorClient = (function () {
   'use strict';
 
-  var Client = wilddog.Client;
-  var Cursor = wilddog.Cursor;
-  var UndoManager = wilddog.UndoManager;
-  var WrappedOperation = wilddog.WrappedOperation;
+  var Client = wildpad.Client;
+  var Cursor = wildpad.Cursor;
+  var UndoManager = wildpad.UndoManager;
+  var WrappedOperation = wildpad.WrappedOperation;
 
   function SelfMeta (cursorBefore, cursorAfter) {
     this.cursorBefore = cursorBefore;
@@ -204,4 +204,4 @@ wilddog.EditorClient = (function () {
   return EditorClient;
 }());
 
-wilddog.utils.makeEventEmitter(wilddog.EditorClient, ['synced']);
+wildpad.utils.makeEventEmitter(wildpad.EditorClient, ['synced']);

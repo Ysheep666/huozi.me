@@ -80,7 +80,10 @@ srp@1.0.4
 standard-minifiers@1.0.2
 started:antd@0.0.1
 started:codemirror@0.0.1
+started:jwt@0.0.1
 started:react-router@0.0.1
+started:wilddog@0.0.1
+started:wildpad@0.0.1
 templating@1.1.5
 templating-tools@1.0.0
 tracker@1.0.9

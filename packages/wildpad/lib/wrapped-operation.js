@@ -1,4 +1,7 @@
-var wildpad = wildpad || { };
+if (typeof wildpad === 'undefined') {
+  wildpad = {}
+}
+
 wildpad.WrappedOperation = (function (global) {
   'use strict';
 

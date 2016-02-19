@@ -1,11 +1,11 @@
-if (typeof wilddog === 'undefined' || wilddog === null) {
-  wilddog = {};
+if (typeof wildpad === 'undefined') {
+  wildpad = {}
 }
 
 // TODO: Rewrite this (probably using a splay tree) to be efficient.  Right now it's based on a linked list
 // so all operations are O(n), where n is the number of spans in the list.
-wilddog.AnnotationList = (function () {
-  var Span = wilddog.Span;
+wildpad.AnnotationList = (function () {
+  var Span = wildpad.Span;
 
   function assert(bool, text) {
     if (!bool) {

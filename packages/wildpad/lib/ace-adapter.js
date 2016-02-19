@@ -1,11 +1,11 @@
 var __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
   __slice = [].slice;
 
-if (typeof wilddog === 'undefined' || wilddog === null) {
-  wilddog = {};
+if (typeof wildpad === "undefined" || wildpad === null) {
+  wildpad = {};
 }
 
-wilddog.ACEAdapter = (function() {
+wildpad.ACEAdapter = (function() {
   ACEAdapter.prototype.ignoreChanges = false;
 
   function ACEAdapter(aceInstance) {
@@ -86,8 +86,8 @@ wilddog.ACEAdapter = (function() {
     if (change.action === 'remove') {
       restLength -= text.length;
     }
-    insert_op = new wilddog.TextOperation().retain(start).insert(text).retain(restLength);
-    delete_op = new wilddog.TextOperation().retain(start)["delete"](text).retain(restLength);
+    insert_op = new wildpad.TextOperation().retain(start).insert(text).retain(restLength);
+    delete_op = new wildpad.TextOperation().retain(start)["delete"](text).retain(restLength);
     if (change.action === 'remove') {
       return [delete_op, insert_op];
     } else {
@@ -167,7 +167,7 @@ wilddog.ACEAdapter = (function() {
     if (start > end) {
       _ref1 = [end, start], start = _ref1[0], end = _ref1[1];
     }
-    return new wilddog.Cursor(start, end);
+    return new wildpad.Cursor(start, end);
   };
 
   ACEAdapter.prototype.setCursor = function(cursor) {

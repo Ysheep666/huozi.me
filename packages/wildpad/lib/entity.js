@@ -1,12 +1,12 @@
-if (typeof wilddog === 'undefined' || wilddog === null) {
-  wilddog = {};
+if (typeof wildpad === 'undefined') {
+  wildpad = {}
 }
 
 /**
  * Object to represent an Entity.
  */
-wilddog.Entity = (function() {
-  var ATTR = wilddog.AttributeConstants;
+wildpad.Entity = (function() {
+  var ATTR = wildpad.AttributeConstants;
   var SENTINEL = ATTR.ENTITY_SENTINEL;
   var PREFIX = SENTINEL + '_';
 
