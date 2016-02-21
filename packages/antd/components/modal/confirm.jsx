@@ -1,11 +1,11 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import Dialog from './Modal';
-import Icon from '../icon';
-import Button from '../button';
-import objectAssign from 'object-assign';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
-export default function (config) {
+const objectAssign = assign
+const {Modal, Icon, Button} = Antd
+
+ModalConfirm = function (config) {
   const props = objectAssign({}, config || {});
   let div = document.createElement('div');
   document.body.appendChild(div);
@@ -103,7 +103,7 @@ export default function (config) {
     );
   }
 
-  ReactDOM.render(<Dialog
+  ReactDOM.render(<Modal
     prefixCls="ant-modal"
     className="ant-confirm"
     visible
@@ -113,7 +113,7 @@ export default function (config) {
     footer=""
     maskTransitionName="fade" width={width}>
     <div style={{ zoom: 1, overflow: 'hidden' }}>{body} {footer}</div>
-  </Dialog>, div, function () {
+  </Modal>, div, function () {
     d = this;
   });
 }

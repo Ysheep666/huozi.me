@@ -1,7 +1,10 @@
-import React from 'react';
-import Tooltip from 'rc-tooltip';
-import Icon from '../icon';
-import Button from '../button';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
+
+const Tooltip = Rc.Tooltip;
+const Icon = Antd.Icon;
+const Button = Antd.Button;
 
 const prefixCls = 'ant-popover';
 const noop = function () {};
@@ -20,7 +23,7 @@ const transitionNames = {
   rightBottom: 'zoom-left',
 };
 
-export default React.createClass({
+Antd.Popconfirm = React.createClass({
   getInitialState() {
     return {
       visible: false

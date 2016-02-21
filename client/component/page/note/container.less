@@ -1,0 +1,50 @@
+.note-container {
+  position: relative;
+  margin: 0 0 20px;
+  background: #fff;
+  box-shadow: 1px 1px 10px #ddd;
+
+  .ant-affix {
+    z-index: 100;
+
+    .actions {
+      border-bottom: 1px solid #eee;
+    }
+  }
+
+  .actions {
+    position: absolute;
+    top: 0;
+    z-index: 100;
+    padding: 10px 15px;
+    height: 50px;
+    width: 100%;
+    background: #fff;
+
+    .tools > a {
+      display: inline-block;
+      color: #9f9f9f;
+
+      i {
+        width: 30px;
+        height: 30px;
+        line-height: 30px;
+        text-align: center;
+      }
+    }
+  }
+
+  .editor {
+    margin-top: 50px;
+  }
+
+  .CodeMirror {
+    padding: 30px 60px;
+    height: auto;
+  }
+
+  .CodeMirror-scroll {
+    min-height: 400px;
+    cursor: text;
+  }
+}

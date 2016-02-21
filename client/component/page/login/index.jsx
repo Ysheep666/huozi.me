@@ -26,7 +26,12 @@ class $Login extends React.Component {
             }
             this.setState({buttonDisabled: false})
           } else {
-            this.context.router.replace('/dashboard')
+            const {location} = this.props
+            if (location.state && location.state.nextPathname) {
+              this.context.router.replace(location.state.nextPathname)
+            } else {
+              this.context.router.replace('/dashboard')
+            }
           }
         })
       }

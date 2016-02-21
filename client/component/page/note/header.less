@@ -1,0 +1,37 @@
+@import '{started:antd}/style/mixins/index.less';
+
+.note-header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  background-color: #fafafa;
+
+  .inner {
+    height: 97px;
+    padding: 40px 0 25px;
+    .clearfix();
+  }
+
+  .back {
+    display: block;
+    float: left;
+    height: 100%;
+    color: #000;
+
+    i {
+      font-size: 28px;
+      margin-top: 2px;
+    }
+  }
+
+  .users {
+    float: right;
+    position: relative;
+
+    button {
+      height: 32px;
+    }
+  }
+}

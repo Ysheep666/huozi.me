@@ -3,7 +3,7 @@ const {Wildpad} = wildpad
 
 class $Editor extends React.Component {
   componentDidMount() {
-    const {id} = this.props
+    const id = this.props.note._id
     const codeMirror = CodeMirror(this.refs.editor, {
       mode: 'markdown',
       lineWrapping: true,
@@ -16,7 +16,7 @@ class $Editor extends React.Component {
       })
     }
 
-    this.ref = new Wilddog(Meteor.settings.public.wilddog.url)
+    this.ref = new Wilddog(Meteor.settings.public.wilddog.url + '/notes')
     if (this.ref.getAuth()) {
       initialize()
     } else {
@@ -44,7 +44,7 @@ class $Editor extends React.Component {
   }
   render() {
     return (
-      <div ref="editor"></div>
+      <div ref="editor" className="editor"></div>
     )
   }
 }

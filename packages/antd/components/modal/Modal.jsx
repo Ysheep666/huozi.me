@@ -1,14 +1,17 @@
-import React from 'react';
-import Dialog from 'rc-dialog';
-import { Dom } from 'rc-util';
-import Button from '../button';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
+
+const Dialog = Rc.Dialog
+const {Dom} = Rc.Util
+const {Button} = Antd
 
 function noop() {}
 
 let mousePosition;
 let mousePositionEventBinded;
 
-let AntModal = React.createClass({
+Antd.Modal = React.createClass({
   getDefaultProps() {
     return {
       prefixCls: 'ant-modal',
@@ -74,5 +77,3 @@ let AntModal = React.createClass({
     );
   }
 });
-
-export default AntModal;

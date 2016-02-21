@@ -68,7 +68,7 @@ let Affix = React.createClass({
       });
     }
 
-    if (affix && (elemOffset.top - this.props.offset) > scrollTop) {
+    if (affix && (elemOffset.top - this.props.offset) >= scrollTop) {
       this.setState({
         affix: false,
         affixStyle: null

@@ -1,8 +1,11 @@
-import AntModal from './Modal';
-import confirm from './confirm';
-import objectAssign from 'object-assign';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
-AntModal.info = function (props) {
+const objectAssign = assign
+const confirm = ModalConfirm
+
+Antd.Modal.info = function (props) {
   const config = objectAssign({}, props, {
     iconClassName: 'info-circle',
     okCancel: false,
@@ -10,7 +13,7 @@ AntModal.info = function (props) {
   return confirm(config);
 };
 
-AntModal.success = function (props) {
+Antd.Modal.success = function (props) {
   const config = objectAssign({}, props, {
     iconClassName: 'check-circle',
     okCancel: false,
@@ -18,7 +21,7 @@ AntModal.success = function (props) {
   return confirm(config);
 };
 
-AntModal.error = function (props) {
+Antd.Modal.error = function (props) {
   const config = objectAssign({}, props, {
     iconClassName: 'exclamation-circle',
     okCancel: false,
@@ -26,11 +29,9 @@ AntModal.error = function (props) {
   return confirm(config);
 };
 
-AntModal.confirm = function (props) {
+Antd.Modal.confirm = function (props) {
   const config = objectAssign({}, props, {
     okCancel: true,
   });
   return confirm(config);
 };
-
-export default AntModal;

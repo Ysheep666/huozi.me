@@ -4,6 +4,12 @@
     "url": "https://started-dev.wilddogio.com",
     "secret": "dVxSsppwdZl8FRvxETnVEOUp6ni56Q2VnMXEEPnQ"
   },
+  "smtp": {
+    "host": "smtpdm.aliyun.com",
+    "port": 25,
+    "username": "postmaster@notice.started.cc",
+    "password": "passw0rd1024"
+  },
   "public": {
     "wilddog": {
       "name": "Started Dev",

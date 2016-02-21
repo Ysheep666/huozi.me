@@ -1,7 +1,10 @@
-import React from 'react';
-import Tooltip from 'rc-tooltip';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
-export default React.createClass({
+const Tooltip = Rc.Tooltip
+
+Antd.Tooltip = React.createClass({
   getDefaultProps() {
     return {
       prefixCls: 'ant-tooltip',

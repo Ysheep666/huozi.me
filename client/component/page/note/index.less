@@ -1,0 +1,29 @@
+@import '{started:antd}/style/mixins/index.less';
+
+body.note-wrap {
+  overflow-y: auto;
+  background: #fafafa;
+
+  .containers {
+    position: relative;
+    overflow: auto;
+  }
+}
+
+.note {
+  margin-bottom: 40px;
+
+  .inner {
+    margin: 0 40px;
+  }
+
+  .content {
+    margin-top: 97px;
+    .clearfix();
+  }
+
+  .note-container {
+    float: left;
+    width: 752px;
+  }
+}

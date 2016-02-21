@@ -1,7 +1,7 @@
 Meteor.methods({
   getWilddogToken() {
     if (!this.userId) {
-      throw new Meteor.Error('get-wilddog-token', '[methods] getWilddogToken -> Invalid user')
+      throw new Meteor.Error('invalid-user', '[methods] getWilddogToken -> Invalid user')
     }
 
     return Jwt.sign({

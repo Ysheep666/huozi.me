@@ -1,6 +1,6 @@
-Notes = new Mongo.Collection('notes')
+Folders = new Mongo.Collection('folders')
 
-Notes.attachSchema(new SimpleSchema({
+Folders.attachSchema(new SimpleSchema({
   name: {
     type: String,
   },
@@ -12,7 +12,7 @@ Notes.attachSchema(new SimpleSchema({
     optional: true,
   },
   'authorizedUsers.$': {
-    type: String,
+    type: String
   },
   createdAt: {
     type: Date,
@@ -38,16 +38,13 @@ Notes.attachSchema(new SimpleSchema({
   },
 }))
 
-Notes.after.insert((userId, doc) => {
-  UserNotes.insert({
-    user: {
-      _id: userId,
-    },
-    note: {
-      _id: doc._id,
-      name: doc.name,
-      createdAt: doc.createdAt,
-      updatedAt: doc.updatedAt,
+Folders.after.insert((userId, doc) => {
+  Users.update(userId, {
+    $push: {
+      'profile.folders': {
+        _id: doc._id,
+        name: doc.name
+      }
     }
   })
 })
