@@ -1,5 +1,4 @@
 const {Message} = Antd
-const {Wildpad} = wildpad
 
 class $Editor extends React.Component {
   componentDidMount() {
@@ -11,7 +10,7 @@ class $Editor extends React.Component {
     })
 
     const initialize = () => {
-      this.wildpad = Wildpad.fromCodeMirror(this.ref.child(id), codeMirror, {
+      this.wildpad = new StartedPad(this.ref.child(id), codeMirror, {
         userId: Meteor.userId()
       })
     }

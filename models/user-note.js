@@ -1,10 +1,7 @@
 UserNotes = new Mongo.Collection('user-notes')
 
 UserNotes.attachSchema(new SimpleSchema({
-  user: {
-    type: Object,
-  },
-  'user._id': {
+  userId: {
     type: String,
   },
   note: {
@@ -23,27 +20,5 @@ UserNotes.attachSchema(new SimpleSchema({
     type: Date,
     optional: true,
     denyInsert: true,
-  },
-  createdAt: {
-    type: Date,
-    autoValue() {
-      if (this.isInsert) {
-        return new Date()
-      } else if (this.isUpsert) {
-        return {$setOnInsert: new Date()}
-      } else {
-        this.unset()
-      }
-    },
-  },
-  updatedAt: {
-    type: Date,
-    optional: true,
-    denyInsert: true,
-    autoValue() {
-      if (this.isUpdate) {
-        return new Date()
-      }
-    },
   },
 }))

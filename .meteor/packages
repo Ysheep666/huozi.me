@@ -33,6 +33,7 @@ accounts-base@1.2.2
 accounts-password@1.1.4
 
 # Started
+started:moment@0.0.1
 started:react-router@0.0.1
 started:antd@0.0.1
 started:codemirror@0.0.1

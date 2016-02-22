@@ -7,4 +7,4 @@ WORKDIR /opt/src
 VOLUME /opt/src
 
 EXPOSE 3000
-CMD meteor
+CMD meteor run --settings settings.json

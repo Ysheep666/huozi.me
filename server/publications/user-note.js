@@ -3,7 +3,7 @@ Meteor.publish('user-note#list', function() {
     return []
   }
   return UserNotes.find({
-    'user._id': this.userId
+    userId: this.userId
   }, {
     fields: {
       note: true

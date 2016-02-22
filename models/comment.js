@@ -1,18 +1,25 @@
-Notes = new Mongo.Collection('notes')
+Comments = new Mongo.Collection('comments')
 
-Notes.attachSchema(new SimpleSchema({
-  name: {
+Comments.attachSchema(new SimpleSchema({
+  content: {
     type: String,
   },
-  createdByUserId: {
+  parentId: {
     type: String,
-  },
-  authorizedUsers: {
-    type: Array,
     optional: true,
   },
-  'authorizedUsers.$': {
+  user: {
+    type: Object,
+  },
+  'user._id': {
     type: String,
+  },
+  'user.name': {
+    type: String,
+  },
+  'user.avatar': {
+    type: String,
+    optional: true,
   },
   createdAt: {
     type: Date,
@@ -37,15 +44,3 @@ Notes.attachSchema(new SimpleSchema({
     },
   },
 }))
-
-Notes.after.insert((userId, doc) => {
-  UserNotes.insert({
-    userId: userId,
-    note: {
-      _id: doc._id,
-      name: doc.name,
-      createdAt: doc.createdAt,
-      updatedAt: doc.updatedAt,
-    }
-  })
-})

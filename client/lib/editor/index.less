@@ -1,0 +1,195 @@
+@import '{started:antd}/style/themes/default/index.less';
+
+.editor {
+  position: relative;
+
+  .CodeMirror {
+    margin-bottom: 80px;
+    padding: 30px 60px 0;
+    height: auto;
+    font-size: 15px;
+  }
+
+  .CodeMirror-vscrollbar, .CodeMirror-hscrollbar {
+    overflow: hidden;
+  }
+
+  .CodeMirror-scroll {
+    min-height: 400px;
+    cursor: text;
+    overflow: initial !important;
+  }
+
+  .CodeMirror-wrap pre {
+    white-space: pre;
+  }
+
+  .CodeMirror-line {
+    &::after {
+      font-family: 'Material Icons';
+      font-weight: normal;
+      font-style: normal;
+      font-size: 24px;  /* Preferred icon size */
+      display: inline-block;
+      width: 1em;
+      height: 1em;
+      line-height: 1;
+      text-transform: none;
+      letter-spacing: normal;
+      word-wrap: normal;
+      white-space: nowrap;
+      direction: ltr;
+
+      /* Support for all WebKit browsers. */
+      -webkit-font-smoothing: antialiased;
+      /* Support for Safari and Chrome. */
+      text-rendering: optimizeLegibility;
+
+      /* Support for Firefox. */
+      -moz-osx-font-smoothing: grayscale;
+
+      /* Support for IE. */
+      font-feature-settings: 'liga';
+    }
+
+    &::after {
+      content: 'chat_bubble';
+      font-size: 16px;
+      vertical-align: middle;
+      position: absolute;
+      right: -40px;
+      z-index: 1;
+      top: 2px;
+      bottom: 0;
+      cursor: pointer;
+      padding: 0 0 4px 20px;
+      opacity: 0;
+      color: #929ba6;
+    }
+
+    &.wildpad-has-comment {
+      &::after {
+        content: 'message';
+        opacity: 1;
+        color: @primary-color;
+      }
+    }
+  }
+
+  .CodeMirror-line:hover {
+    &::after {
+      opacity: 1;
+    }
+  }
+
+  .CodeMirror-code .highlight-commented-line pre {
+    background-color: rgba(45, 183, 245, 0.3);
+  }
+
+  .comment-wrap {
+    position: absolute;
+    right: -260px;
+    padding: 16px;
+    width: 240px;
+    background-color: #fff;
+    border: 1px solid #d9d9d9;
+    border-radius: 2px;
+    box-shadow: 0 0 4px rgba(0,0,0,0.17);
+    visibility:hidden;
+    transition: display .3s ease;
+
+    &.open {
+      visibility: visible;
+    }
+
+    &-arrow {
+      display: block;
+      position: absolute;
+      top: 30px;
+      left: -9px;
+      border: 9px solid transparent;
+      border-left-width: 0;
+      border-right-color: #d9d9d9;
+
+      &::after {
+        content: " ";
+        position: absolute;
+        left: 2px;
+        bottom: -8px;
+        border: 8px solid transparent;
+        border-left-width: 0;
+        border-right-color: #fff;
+      }
+    }
+
+    .ant-form-item {
+      margin-bottom: 15px;
+    }
+  }
+
+  .comment-input-box-footer {
+    text-align: right;
+
+    button {
+      margin-left: 8px;
+    }
+  }
+
+  .comment-list {
+    > div {
+      margin: 0 0 8px;
+    }
+
+    .author {
+      float: left;
+      margin: 0 10px 2px 0;
+      width: 24px;
+      height: 24px;
+      border-radius: 50%;
+      overflow: hidden;
+
+      .font {
+        width: 100%;
+        height: 100%;
+
+        i {
+          width: 100%;
+          height: 100%;
+          line-height: 24px;
+          font-size: 20px;
+          text-align: center;
+          background-color: #e4e4e4;
+          color: #b1b1b1;
+        }
+      }
+
+      .image {
+        height: 100%;
+        height: 100%;
+        background-size: 100% 100%;
+      }
+    }
+
+    .info {
+      .name {
+        color: @primary-color;
+      }
+
+      .date {
+        display: inline-block;
+        float: right;
+        width: 90px;
+        font-size: 12px;
+        overflow: hidden;
+        text-align: right;
+      }
+    }
+
+    .comment-content {
+      position: relative;
+      display: block;
+      margin: 0 0 1px 35px;
+      color: #1c2836;
+    }
+  }
+}

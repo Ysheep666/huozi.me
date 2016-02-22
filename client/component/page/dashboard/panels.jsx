@@ -6,7 +6,7 @@ $DashboardPanels = React.createClass({
   getMeteorData() {
     Meteor.subscribe('user-note#list')
     return {
-      notes: UserNotes.find({}).fetch(),
+      notes: UserNotes.find().fetch(),
     }
   },
   render() {

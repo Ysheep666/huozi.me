@@ -406,7 +406,7 @@ wildpad.RichTextCodeMirror = (function () {
             val = val + "px";
           }
 
-          var classVal = val.toString().toLowerCase().replace(/[^a-z0-9-_]/g, '-');
+          var classVal = val.toString().replace(/[^A-Za-z0-9-_]/g, '-');
           className += '-' + classVal;
           if (DynamicStyleAttributes[attr]) {
             if (!StyleCache_[attr]) StyleCache_[attr] = {};
