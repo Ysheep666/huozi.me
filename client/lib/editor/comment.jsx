@@ -1,5 +1,51 @@
 const {Form, Input, Button, Message} = Antd
 
+class CommentItem extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {confirm: false}
+  }
+  handleDeleteConfirm(e) {
+    e.preventDefault()
+    this.setState({confirm: true})
+  }
+  handleDeleteCancel (e) {
+    e.preventDefault()
+    this.setState({confirm: false})
+  }
+  render() {
+    const {comment, handleDelete} = this.props
+    return (
+      <div onMouseLeave={this.handleDeleteCancel.bind(this)}>
+        <div className="author">
+          {!comment.user.avatar ? (
+            <div className="font"><i className="material-icons">person</i></div>
+          ) : (
+            <div className="image" style={{backgroundImage: `url(${comment.user.avatar})`}}></div>
+          )}
+        </div>
+        <div className="info">
+          <span className="name">{comment.user.name}</span>
+          <span className="date">{moment(comment.createdAt).fromNow()}</span>
+          <div className="delete">
+            {this.state.confirm ? (
+              <span>
+                <a onClick={handleDelete}><i className="material-icons">done</i></a>
+                <a onClick={this.handleDeleteCancel.bind(this)}><i className="material-icons">clear</i></a>
+              </span>
+            ) : (
+              <a onClick={this.handleDeleteConfirm.bind(this)}><i className="material-icons">delete</i> 删除</a>
+            )}
+          </div>
+        </div>
+        <div className="comment-content">
+          {comment.content}
+        </div>
+      </div>
+    )
+  }
+}
+
 $EditorComment = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
@@ -28,11 +74,27 @@ $EditorComment = React.createClass({
           if (error) {
             Message.error('提交数据失败，请等待一会再试！')
           } else {
+            if (!this.props.id) {
+              this.props.close()
+            } else {
+              this.props.form.resetFields()
+            }
             this.props.callback(result)
           }
         })
       }
     })
+  },
+  handleDeleteComment(commentId) {
+    return (e) => {
+      e.preventDefault()
+      Meteor.call('deleteComment', commentId || null, (error) => {
+        if (!error && commentId == this.props.id) {
+          this.props.close()
+          this.props.removeComment()
+        }
+      })
+    }
   },
   render() {
     const {comments} = this.data
@@ -43,24 +105,7 @@ $EditorComment = React.createClass({
         {!!comments.length && (
           <div className="comment-list">
             {comments.map((comment, i) => {
-              return (
-                <div key={i}>
-                  <div className="author">
-                    {!comment.user.avatar ? (
-                      <div className="font"><i className="material-icons">person</i></div>
-                    ) : (
-                      <div className="image" style={{backgroundImage: `url(${comment.user.avatar})`}}></div>
-                    )}
-                  </div>
-                  <div className="info">
-                    <span className="name">{comment.user.name}</span>
-                    <span className="date">{moment(comment.createdAt).fromNow()}</span>
-                  </div>
-                  <div className="comment-content">
-                    {comment.content}
-                  </div>
-                </div>
-              )
+              return (<CommentItem key={i} comment={comment} handleDelete={this.handleDeleteComment(comment._id)}/>)
             })}
           </div>
         )}

@@ -1,5 +1,9 @@
 @import '{started:antd}/style/themes/default/index.less';
 
+body.is-open-comment {
+  overflow: hidden !important;
+}
+
 .editor {
   position: relative;
 
@@ -88,15 +92,9 @@
 
   .comment-wrap {
     position: absolute;
-    right: -260px;
-    padding: 16px;
-    width: 240px;
-    background-color: #fff;
-    border: 1px solid #d9d9d9;
-    border-radius: 2px;
-    box-shadow: 0 0 4px rgba(0,0,0,0.17);
+    top: 0;
+    right: -16px;
     visibility:hidden;
-    transition: display .3s ease;
 
     &.open {
       visibility: visible;
@@ -105,8 +103,8 @@
     &-arrow {
       display: block;
       position: absolute;
-      top: 30px;
       left: -9px;
+      z-index: 11;
       border: 9px solid transparent;
       border-left-width: 0;
       border-right-color: #d9d9d9;
@@ -122,9 +120,29 @@
       }
     }
 
+    &-inner {
+      position: absolute;
+      z-index: 1;
+      padding: 16px 0;
+      width: 240px;
+      background-color: #fff;
+      border: 1px solid #d9d9d9;
+      border-radius: 2px;
+      box-shadow: 0 0 4px rgba(0,0,0,0.17);
+    }
+
     .ant-form-item {
       margin-bottom: 15px;
     }
+  }
+
+  .comment-list, .comment-input-box {
+    padding: 0 16px;
+    overflow-y: auto;
+  }
+
+  .comment-list {
+    margin-bottom: 10px;
   }
 
   .comment-input-box-footer {
@@ -136,10 +154,6 @@
   }
 
   .comment-list {
-    > div {
-      margin: 0 0 8px;
-    }
-
     .author {
       float: left;
       margin: 0 10px 2px 0;
@@ -176,12 +190,28 @@
       }
 
       .date {
-        display: inline-block;
+        display: block;
         float: right;
         width: 90px;
         font-size: 12px;
         overflow: hidden;
         text-align: right;
+      }
+
+      .delete {
+        display: none;
+        float: right;
+        font-size: 12px;
+        overflow: hidden;
+        text-align: right;
+        color: @error-color;
+
+        i {
+          font-size: 16px;
+          display: block;
+          float: left;
+          margin-right: 4px;
+        }
       }
     }
 
@@ -190,6 +220,22 @@
       display: block;
       margin: 0 0 1px 35px;
       color: #1c2836;
+    }
+
+    > div {
+      margin: 0 0 8px;
+
+      &:hover {
+        .info {
+          .date {
+            display: none;
+          }
+
+          .delete {
+            display: block;
+          }
+        }
+      }
     }
   }
 }

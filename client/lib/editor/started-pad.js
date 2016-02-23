@@ -5,16 +5,39 @@ class $StartedPad extends Wildpad {
     super(ref, place, options)
 
     this.$cmWrapper = $(this.codeMirror_.display.wrapper)
-    this.$cmCommentWrap = $('<div class="comment-wrap"><div class="comment-wrap-arrow"></div><div class="comment-wrap-inner"></div></div>')
+    this.$cmCommentInner = $('<div class="comment-wrap-inner"></div>');
+    this.$cmCommentWrap = $('<div class="comment-wrap"><div class="comment-wrap-arrow"></div></div>')
     this.$cmSizer = this.$cmWrapper.find('div.CodeMirror-sizer')
     this.$cmText = this.$cmWrapper.find('div.CodeMirror-code')
 
+    this.$cmCommentInner.appendTo(this.$cmCommentWrap)
     this.$cmCommentWrap.insertAfter(this.$cmWrapper)
 
     this.closeComment_ = (e) => {
       if (!$(e.target).closest('div.editor').length) {
         this.closeComments()
       }
+    }
+
+    this.resizeComment_ = () => {
+      const windowHeight = $(window).height()
+      const maxCommentHeight = windowHeight - 250
+
+      let commentHeight = this.$cmCommentInner.height()
+      if (commentHeight > maxCommentHeight) {
+        commentHeight = maxCommentHeight + 100
+      }
+
+      let top = this.codeMirror_.heightAtLine(this.index_, 'local') + 182 - $(window).scrollTop() - commentHeight / 2
+
+      if (top < 100) {
+        top = 100
+      } else if ((top + commentHeight + 40) > windowHeight) {
+        top = windowHeight - commentHeight - 40
+      }
+
+      this.$cmCommentInner.css({position: 'fixed', top})
+      this.$cmCommentInner.find('div.comment-list').css({maxHeight: maxCommentHeight})
     }
 
     this.codeMirror_.on('mousedown', (instance, e) => {
@@ -52,6 +75,7 @@ class $StartedPad extends Wildpad {
     }
   }
   openComment(index, commentId = null) {
+    this.index_ = index
     this.highlightLine(index)
 
     const that = this
@@ -62,30 +86,46 @@ class $StartedPad extends Wildpad {
         if (!commentId) {
           this.addCommentAttributes(index, id)
         }
-        this.closeComments()
+      },
+      removeComment: () => {
+        this.removeCommentAttributes(index)
       }
-    }), this.$cmCommentWrap.find('div.comment-wrap-inner')[0], function() {
+    }), this.$cmCommentInner[0], function() {
       that.comment_ = this
     })
 
-    this.$cmCommentWrap.css({
+    this.$cmCommentWrap.find('div.comment-wrap-arrow').css({
+      top: this.codeMirror_.heightAtLine(index, 'local') + 30
+    })
+
+    this.$cmCommentInner.css({
+      position: 'absolute',
       top: this.codeMirror_.heightAtLine(index, 'local')
-    }).addClass('open')
+    })
 
     setTimeout(() => {
       if (!this.isOpenComment) {
-        $('body').bind('mousedown', this.closeComment_)
+        $(window).bind('resize', this.closeComment_)
+        $('body').addClass('is-open-comment').bind('mousedown', this.closeComment_)
+        this.$cmCommentInner.bind('mresize', this.resizeComment_)
         this.isOpenComment = true
       }
     }, 0)
+
+    setTimeout(() => {
+      this.resizeComment_()
+      this.$cmCommentWrap.addClass('open')
+    }, 10)
   }
   closeComments() {
     this.unHighlightLine()
 
     this.$cmCommentWrap.removeClass('open')
-    ReactDOM.unmountComponentAtNode(this.$cmCommentWrap.find('div.comment-wrap-inner')[0])
+    ReactDOM.unmountComponentAtNode(this.$cmCommentInner[0])
     this.isOpenComment = false
-    $('body').unbind('mousedown', this._closeComment)
+    $(window).unbind('resize', this.closeComment_)
+    $('body').removeClass('is-open-comment').unbind('mousedown', this._closeComment)
+    this.$cmCommentInner.unbind('mresize', this.resizeComment_)
   }
   addCommentAttributes(index, commentId) {
     this.richTextCodeMirror_.updateLineAttributes(index, index, (attributes) => {

@@ -19,4 +19,16 @@ Meteor.methods({
       }
     })
   },
+  deleteComment(id) {
+    if (!this.userId) {
+      throw new Meteor.Error('invalid-user', '[methods] deleteComment -> Invalid user')
+    }
+
+    const comment = Comments.findOne(id)
+    if (this.userId != comment.user._id) {
+      throw new Meteor.Error('comment-deleting-not-allowed', '[methods] deleteComment -> Comment deleting not allowed')
+    }
+
+    return Comments.remove(comment._id)
+  },
 })
