@@ -26,7 +26,7 @@ Meteor.methods({
 
     const comment = Comments.findOne(id)
     if (this.userId != comment.user._id) {
-      throw new Meteor.Error('comment-deleting-not-allowed', '[methods] deleteComment -> Comment deleting not allowed')
+      throw new Meteor.Error('comment-delete-not-allowed', '[methods] deleteComment -> Comment delete not allowed')
     }
 
     return Comments.remove(comment._id)

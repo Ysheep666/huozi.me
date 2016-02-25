@@ -11,15 +11,28 @@
       border-bottom: 1px solid #eee;
     }
   }
+  
+  .note-container-header::before {
+    content: '';
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    height: 10px;
+    z-index: 101;
+    box-shadow: 1px 1px 10px #ddd;
+  }
 
   .actions {
     position: absolute;
     top: 0;
-    z-index: 100;
+    z-index: 111;
     padding: 10px 15px;
     height: 50px;
     width: 100%;
     background: #fff;
+    
 
     .tools > a {
       display: inline-block;

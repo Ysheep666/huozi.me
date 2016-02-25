@@ -17,6 +17,12 @@ Package.onUse(function(api) {
     'antd.browserify.js',
     'lib/form/utils.js',
     'lib/form/createForm.jsx',
+    'lib/tabs/utils.js',
+    'lib/tabs/KeyCode.js',
+    'lib/tabs/InkBarMixin.jsx',
+    'lib/tabs/TabPane.jsx',
+    'lib/tabs/Nav.jsx',
+    'lib/tabs/Tabs.jsx',
     'components/affix/index.jsx',
     'components/icon/index.jsx',
     'components/button/button-group.jsx',
@@ -33,6 +39,7 @@ Package.onUse(function(api) {
     'components/modal/index.jsx',
     'components/tooltip/index.jsx',
     'components/popconfirm/index.jsx',
+    'components/tabs/index.jsx',
     'components/queue-anim/index.jsx'
   ], 'client');
 

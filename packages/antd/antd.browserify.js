@@ -8,6 +8,7 @@ assign = require('object-assign')
 
 Rc = {
   Util: require('rc-util'),
+  Animate: require('rc-animate'),
   QueueAnim: require('rc-queue-anim'),
   Notification: require('rc-notification'),
   Tooltip: require('rc-tooltip'),

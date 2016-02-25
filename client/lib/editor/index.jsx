@@ -13,6 +13,16 @@ class $Editor extends React.Component {
       this.wildpad = new StartedPad(this.ref.child(id), codeMirror, {
         userId: Meteor.userId()
       })
+
+      this.wildpad.on('ready', () => {
+        PubSub.publish('pad text', this.wildpad.getText())
+      })
+
+      this.wildpad.on('synced', () => {
+        PubSub.publish('pad text', this.wildpad.getText())
+      })
+
+      PubSub.subscribe('scroll to title', this.handleScrollTitle.bind(this))
     }
 
     this.ref = new Wilddog(Meteor.settings.public.wilddog.url + '/notes')
@@ -40,6 +50,25 @@ class $Editor extends React.Component {
       this.wildpad = null
       this.ref = null
     }, 0)
+  }
+  handleScrollTitle(message, data) {
+    let $el, index = 0
+    const headers = this.wildpad.$cmWrapper.find('.cm-header')
+    
+    for (let i = 0; i < headers.length; i++) {
+      const el = $(headers[i]).is('pre') ? $(headers[i]) : $(headers[i]).closest('pre')
+      const text = el.text().replace(/#/g, '').trim()
+      if (data.text == text) {
+        if (data.index == index) {
+          $el = el
+          break
+        } else {
+          index++
+        }
+      }
+    }
+    
+    $(window).scrollTop($el.position().top + 20)
   }
   render() {
     return (

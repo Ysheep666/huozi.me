@@ -4,6 +4,10 @@ Notes.attachSchema(new SimpleSchema({
   name: {
     type: String,
   },
+  summary: {
+    type: String,
+    optional: true,
+  },
   createdByUserId: {
     type: String,
   },
@@ -48,4 +52,17 @@ Notes.after.insert((userId, doc) => {
       updatedAt: doc.updatedAt,
     }
   })
+})
+
+Notes.after.update((userId, doc, fieldNames, modifier) => {
+  if (!(fieldNames.indexOf('name') < 0)) {
+    UserNotes.update({
+      'note._id': doc._id,
+    }, {
+      $set: {
+        'note.name': doc.name,
+        'note.updatedAt': doc.updatedAt,
+      }
+    })
+  }
 })

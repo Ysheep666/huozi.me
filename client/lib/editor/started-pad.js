@@ -24,12 +24,11 @@ class $StartedPad extends Wildpad {
       const maxCommentHeight = windowHeight - 250
 
       let commentHeight = this.$cmCommentInner.height()
-      if (commentHeight > maxCommentHeight) {
-        commentHeight = maxCommentHeight + 100
+      if (commentHeight > (windowHeight - 150)) {
+        commentHeight = windowHeight - 150
       }
 
-      let top = this.codeMirror_.heightAtLine(this.index_, 'local') + 182 - $(window).scrollTop() - commentHeight / 2
-
+      let top = this.codeMirror_.heightAtLine(this.index_, 'local') + 172 - $(window).scrollTop() - commentHeight / 2
       if (top < 100) {
         top = 100
       } else if ((top + commentHeight + 40) > windowHeight) {
@@ -37,7 +36,7 @@ class $StartedPad extends Wildpad {
       }
 
       this.$cmCommentInner.css({position: 'fixed', top})
-      this.$cmCommentInner.find('div.comment-list').css({maxHeight: maxCommentHeight})
+      this.$cmCommentInner.find('div.comment-list').css({maxHeight: windowHeight - 250})
     }
 
     this.codeMirror_.on('mousedown', (instance, e) => {
@@ -115,7 +114,7 @@ class $StartedPad extends Wildpad {
     setTimeout(() => {
       this.resizeComment_()
       this.$cmCommentWrap.addClass('open')
-    }, 10)
+    }, 100)
   }
   closeComments() {
     this.unHighlightLine()

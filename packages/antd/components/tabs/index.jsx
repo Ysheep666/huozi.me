@@ -1,7 +1,9 @@
-import Tabs from 'rc-tabs';
-import React, { cloneElement } from 'react';
-import classNames from 'classnames';
-import Icon from '../icon';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
+
+const {cloneElement} = React
+const Icon = Antd.Icon;
 
 class AntTabs extends React.Component {
   constructor(props) {
@@ -86,4 +88,4 @@ AntTabs.defaultProps = {
 
 AntTabs.TabPane = Tabs.TabPane;
 
-export default AntTabs;
+Antd.Tabs = AntTabs;

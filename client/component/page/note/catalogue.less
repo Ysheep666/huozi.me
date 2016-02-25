@@ -1,0 +1,91 @@
+@levelWidth: 15px;
+
+.note-catalogue {
+  height: 100%;
+
+  .not-found {
+    margin-top: 60px;
+    text-align: center;
+    font-size: 14px;
+    color: #7d7d7d;
+  }
+
+  &-box {
+    padding: 20px 0;
+    height: 100%;
+    &::before, &::after {
+      content: '';
+      position: absolute;
+      left: 1px;
+      z-index: 1;
+      width: 10px;
+      height: 10px;
+      border: 2px solid #d4d4d4;
+      border-radius: 50%;
+    }
+
+    &::before {
+      top: 1px;
+    }
+
+    &::after {
+      bottom: 1px;
+    }
+  }
+
+  &-bar {
+    content: '';
+    position: absolute;
+    top: 9px;
+    bottom: 9px;
+    left: 5px;
+    width: 0;
+    border-left: 2px solid #eaeaea;
+  }
+
+  ul {
+    position: relative;
+    padding-left: 20px;
+    height: 100%;
+    overflow-y: auto;
+
+    li {
+      position: relative;
+      height: 26px;
+      line-height: 26px;
+      font-size: 14px;
+      color: #666;
+
+      &::before {
+        content: '';
+        position: absolute;
+        top: 7px;
+        left: -19px;
+        z-index: 1;
+        width: 10px;
+        height: 10px;
+        border: 2px solid #fafafa;
+        background-color: #d0d0d0;
+        border-radius: 50%;
+      }
+
+      a {
+        display: inline-block;
+        max-width: 100%;
+        line-height: inherit;
+        font-size: inherit;
+        text-decoration: none;
+        color: inherit;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+      }
+
+      &.level0 {color: #333;}
+      &.level1 {padding-left: @levelWidth * 1;}
+      &.level2 {padding-left: @levelWidth * 2;}
+      &.level3 {padding-left: @levelWidth * 3;}
+      &.level4 {padding-left: @levelWidth * 4;}
+    }
+  }
+}

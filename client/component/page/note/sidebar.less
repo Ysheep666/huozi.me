@@ -1,0 +1,35 @@
+body.is-open-comment {
+  .note-sidebar {
+    filter: blur(4px);
+  }
+}
+
+.note-sidebar {
+  &, .ant-tabs {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  .ant-tabs-tabs-bar {
+    position: relative;
+    border-top: 1px solid #d9d9d9;
+    border-bottom: none;
+    z-index: 1;
+  }
+
+  .ant-tabs-ink-bar {
+    top: 0;
+    bottom: auto;
+  }
+
+  .ant-tabs-content {
+    position: absolute;
+    top: 52px;
+    bottom: 0;
+    width: 100%;
+  }
+
+  .ant-tabs-tabpane {
+    height: 100%;
+  }
+}

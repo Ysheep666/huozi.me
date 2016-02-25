@@ -44,6 +44,7 @@ lauricio:less-autoprefixer@2.5.0_3
 livedata@1.0.15
 localstorage@1.0.5
 logging@1.0.8
+markdown@1.0.5
 matb33:collection-hooks@0.8.1
 mdg:validation-error@0.2.0
 meteor@1.1.10
@@ -83,6 +84,7 @@ started:antd@0.0.1
 started:codemirror@0.0.1
 started:jwt@0.0.1
 started:moment@0.0.1
+started:pubsub@0.0.1
 started:react-router@0.0.1
 started:wilddog@0.0.1
 started:wildpad@0.0.1

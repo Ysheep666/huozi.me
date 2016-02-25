@@ -1,8 +1,12 @@
 const {Link} = ReactRouter
-const {QueueAnim} = Antd
 
 const $Note = React.createClass({
   mixins: [ReactMeteorData],
+  getInitialState() {
+    return {
+      content: '',
+    }
+  },
   getMeteorData() {
     Meteor.subscribe('note#detail', this.props.params.id)
     return {
@@ -11,24 +15,30 @@ const $Note = React.createClass({
   },
   componentWillMount() {
     document.body.className = 'note-wrap'
+    PubSub.subscribe('pad text', this.initializeContent)
   },
   componentWillUnmount(nextProps) {
     document.body.className = ''
+    PubSub.unsubscribe(this.initializeContent)
+  },
+  initializeContent(message, content) {
+    this.setState({content})
   },
   render() {
     const {location} = this.props
     const {note} = this.data
     return (
-      <QueueAnim className="note">
+      <div className="note">
         {note && (
           <div>
             <NoteHeader note={note} location={location}/>
             <div className="inner content">
               <NoteContainer note={note}/>
+              <NoteSidebar note={note} content={this.state.content}/>
             </div>
           </div>
         )}
-      </QueueAnim>
+      </div>
     )
   },
 })

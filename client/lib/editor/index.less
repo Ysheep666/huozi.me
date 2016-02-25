@@ -24,10 +24,6 @@ body.is-open-comment {
     overflow: initial !important;
   }
 
-  .CodeMirror-wrap pre {
-    white-space: pre;
-  }
-
   .CodeMirror-line {
     &::after {
       font-family: 'Material Icons';
@@ -62,10 +58,10 @@ body.is-open-comment {
       vertical-align: middle;
       position: absolute;
       right: -40px;
-      z-index: 1;
+      z-index: 99;
       top: 2px;
       bottom: 0;
-      cursor: pointer;
+      cursor: pointer !important;
       padding: 0 0 4px 20px;
       opacity: 0;
       color: #929ba6;
@@ -93,8 +89,9 @@ body.is-open-comment {
   .comment-wrap {
     position: absolute;
     top: 0;
-    right: -16px;
-    visibility:hidden;
+    right: -265px;
+    width: 250px;
+    visibility: hidden;
 
     &.open {
       visibility: visible;

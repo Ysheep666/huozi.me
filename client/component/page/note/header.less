@@ -17,6 +17,7 @@
   .back {
     display: block;
     float: left;
+    margin-right: 10px;
     height: 100%;
     color: #000;
 
@@ -32,6 +33,62 @@
 
     button {
       height: 32px;
+    }
+  }
+
+  .title {
+    h1 {
+      display: inline-block;
+      line-height: 32px;
+      font-size: 20px;
+      font-weight: 400;
+      color: #000;
+    }
+
+    .view {
+      a {
+        position: relative;
+        display: inline-block;
+        margin-left: 10px;
+        padding-left: 16px;
+        font-size: 15px;
+        visibility: hidden;
+
+        i {
+          position: absolute;
+          left: 0;
+          top: 1px;
+          font-size: 16px;
+        }
+      }
+
+      &:hover {
+        a {
+          visibility: visible;
+        }
+      }
+    }
+
+    .edit {
+      form {
+        margin: 0 300px 0 0;
+      }
+
+      input {
+        padding: 0;
+        height: 32px;
+        width: 80%;
+        line-height: 32px;
+        font-size: 20px;
+        background-color: transparent;
+        border: none;
+        outline: none;
+        box-shadow: none;
+      }
+
+      .ant-form-item {
+        margin-bottom: 0;
+      }
     }
   }
 }

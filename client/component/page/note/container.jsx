@@ -5,7 +5,7 @@ class $NoteContainer extends React.Component{
     const {note} = this.props
     return (
       <div className="note-container">
-        <Affix offset={97}>
+        <Affix offset={97} affixClassName="note-container-header">
           <div className="actions">
             <div className="tools">
               <Tooltip placement="bottom" title="上传图片">
