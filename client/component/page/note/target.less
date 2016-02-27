@@ -1,0 +1,127 @@
+@import '{started:antd}/style/themes/default/index.less';
+
+.note-target {
+  position: absolute;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  overflow-y: auto;
+
+  .circle {
+    position: relative;
+    margin: 30px auto 0;
+    width: 200px;
+    height: 200px;
+    text-align: center;
+
+    &-text {
+      position: absolute;
+      top: 30px;
+      right: 30px;
+      bottom: 30px;
+      left: 30px;
+
+      &-inner {
+        position: absolute;
+        width: 100%;
+        top: 50%;
+        transform: translateY(-50%);
+
+        span {
+          font-size: 13px;
+        }
+
+        h3 {
+          line-height: 40px;
+          font-size: 36px;
+          font-weight: normal;
+        }
+      }
+    }
+  }
+
+  .ant-progress-circle-inner {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      bottom: 1px;
+      left: 1px;
+      z-index: -1;
+      border-radius: 50%;
+      background-color: #dedede;
+    }
+  }
+
+  .rc-progress-circle-trail {
+    stroke: #f1f1f1;
+  }
+
+  .rc-progress-circle-path {
+    stroke: transparent;
+  }
+
+  .note-target-setting {
+    margin: 20px auto;
+    width: 180px;
+    text-align: center;
+
+    .ant-input-number {
+      display: block;
+      width: 72px;
+      margin: 6px auto;
+
+      input {
+        text-align: center;
+      }
+    }
+
+    .ant-input-number-handler-wrap {
+      display: none;
+    }
+  }
+
+  &.start {
+    .ant-progress-circle-inner::before {
+      background-color: lighten(@primary-color, 30%);
+    }
+
+    .rc-progress-circle-path {
+      stroke: @primary-color;
+    }
+
+    .circle-text {
+      color: @primary-color;
+    }
+  }
+
+  &.done {
+    .ant-progress-circle-inner::before {
+      background-color: lighten(@success-color, 30%);
+    }
+
+    .rc-progress-circle-path {
+      stroke: @success-color;
+    }
+
+    .circle-text {
+      color: @success-color;
+    }
+  }
+
+  &.surplus {
+    .ant-progress-circle-inner::before {
+      background-color: lighten(@error-color, 30%);
+    }
+
+    .rc-progress-circle-path {
+      stroke: @error-color;
+    }
+
+    .circle-text {
+      color: @error-color;
+    }
+  }
+}

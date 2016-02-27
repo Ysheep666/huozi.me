@@ -1,8 +1,9 @@
-import { Circle as Progresscircle } from 'rc-progress';
-import React from 'react';
-import assign from 'object-assign';
-import warning from 'warning';
-import Icon from '../icon';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
+
+const Progresscircle = Rc.Progress.Circle;
+const Icon = Antd.Icon;
 
 const prefixCls = 'ant-progress';
 
@@ -175,7 +176,7 @@ let Circle = React.createClass({
   }
 });
 
-export default {
+Antd.Progress = {
   Line,
   Circle,
 };

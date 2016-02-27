@@ -1,8 +1,6 @@
-import React from 'react';
-import Button from '../button';
-import Icon from '../icon';
-import Dropdown from './dropdown';
-const ButtonGroup = Button.Group;
+const {Button, Icon} = Antd
+const Dropdown = AntdDropdown
+const ButtonGroup = Button.Group
 
 const align = {
   points: ['tr', 'br'],
@@ -14,7 +12,7 @@ const align = {
   targetOffset: [0, 0],
 };
 
-export default React.createClass({
+AntdDropdownButton = React.createClass({
   getDefaultProps() {
     return {
       align,

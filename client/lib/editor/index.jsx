@@ -54,20 +54,22 @@ class $Editor extends React.Component {
   handleScrollTitle(message, data) {
     let $el, index = 0
     const headers = this.wildpad.$cmWrapper.find('.cm-header')
-    
+
     for (let i = 0; i < headers.length; i++) {
-      const el = $(headers[i]).is('pre') ? $(headers[i]) : $(headers[i]).closest('pre')
-      const text = el.text().replace(/#/g, '').trim()
-      if (data.text == text) {
-        if (data.index == index) {
-          $el = el
-          break
-        } else {
-          index++
+      const $header = $(headers[i])
+      const el = $header.is('pre') ? $header : $header.closest('pre')
+      if (!($header.text().indexOf('#') < 0)) {
+        if (data.text == el.text().replace(/#/g, '').trim()) {
+          if (data.index == index) {
+            $el = el
+            break
+          } else {
+            index++
+          }
         }
       }
     }
-    
+
     $(window).scrollTop($el.position().top + 20)
   }
   render() {

@@ -1,7 +1,6 @@
-import React from 'react';
-import Dropdown from 'rc-dropdown';
+const {Dropdown} = Rc
 
-export default React.createClass({
+AntdDropdown =  React.createClass({
   getDefaultProps() {
     return {
       transitionName: 'slide-up',

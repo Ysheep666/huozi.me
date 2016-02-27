@@ -30,15 +30,59 @@ class $NoteCatalogue extends React.Component{
       }
 
       this.setState({left, items})
+    } else {
+      this.setState({left: 5, items: []})
     }
   }
   componentDidMount() {
     this.initialize(this.props.content)
+
+    this.catalogueIndex = -1
+    this.scrollPage = () => {
+      const $window = $(window)
+      const headers = $('.editor .CodeMirror .cm-header')
+      if (headers.length) {
+        let index = -1, _index = -1
+        for (let i = 0; i < headers.length; i++) {
+          const $header = $(headers[i])
+          const $el = $header.is('pre') ? $header : $header.closest('pre')
+          if (!($header.text().indexOf('#') < 0)) {
+            _index++
+            if ($window.scrollTop() > $el.position().top + 19) {
+              index = _index
+            }
+          }
+        }
+
+        if (this.catalogueIndex !== index) {
+          this.catalogueIndex = index
+          const $list = $(this.refs.catalogueList)
+          $list.find('li.active').removeClass('active')
+          if (!(this.catalogueIndex < 0)) {
+            const $li = $list.find('li').eq(this.catalogueIndex)
+            const _height = (_index + 1) * $li.height()
+            const height = $list.height()
+            const top = this.catalogueIndex * $li.height()
+
+            $li.addClass('active')
+
+            if (_height > height && top > (height/2)) {
+              $list.scrollTop(top - height/2)
+            }
+          }
+        }
+      }
+    }
+
+    $(window).bind('scroll', this.scrollPage)
   }
   componentWillReceiveProps(nextProps) {
     if (nextProps.content != this.props.content) {
       this.initialize(nextProps.content)
     }
+  }
+  componentWillUnmount() {
+    $(window).unbind('scroll', this.scrollPage)
   }
   handleScrollToTitle(data) {
     return (e) => {
@@ -53,7 +97,7 @@ class $NoteCatalogue extends React.Component{
         {items.length ? (
           <div className="note-catalogue-box">
             <div className="note-catalogue-bar"></div>
-            <ul>
+            <ul ref="catalogueList">
               {items.map((item, i) => {
                 return (
                   <li key={i} className={`level${item.level - left}`}>

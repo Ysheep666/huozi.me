@@ -1,8 +1,3 @@
-let velocity;
-if (typeof document !== 'undefined' && typeof window !== 'undefined') {
-  velocity = require('velocity-animate');
-}
-
 function animate(node, show, transitionName, done) {
   let ok;
 
@@ -42,4 +37,4 @@ const animation = {
   },
 };
 
-module.exports = animation;
+CommonAnimation = animation;

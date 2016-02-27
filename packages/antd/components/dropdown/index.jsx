@@ -1,5 +1,6 @@
-import Dropdown from './dropdown';
-import DropdownButton from './dropdown-button';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
-Dropdown.Button = DropdownButton;
-export default Dropdown;
+Antd.Dropdown = AntdDropdown
+Antd.Dropdown.Button = AntdDropdownButton;

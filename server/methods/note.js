@@ -6,7 +6,7 @@ Meteor.methods({
 
     return Notes.insert({name, createdByUserId: this.userId})
   },
-  updateNote(id, {name, summary}) {
+  updateNote(id, {name, summary, target}) {
     if (!this.userId) {
       throw new Meteor.Error('invalid-user', '[methods] createNote -> Invalid user')
     }
@@ -23,6 +23,7 @@ Meteor.methods({
     const doc = {}
     if (name) { doc.name = name }
     if (summary) { doc.summary = summary }
+    if (target) { doc.target = target }
     return Notes.update(note._id, {'$set': doc})
   },
 })

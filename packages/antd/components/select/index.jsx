@@ -1,7 +1,8 @@
-import React from 'react';
-import Select, { Option, OptGroup } from 'rc-select';
-import classNames from 'classnames';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
+const {Option, OptGroup} = Select
 const AntSelect = React.createClass({
   getDefaultProps() {
     return {
@@ -26,7 +27,6 @@ const AntSelect = React.createClass({
     if (combobox) {
       notFoundContent = null;
     }
-
     return (
       <Select {...this.props}
         className={cls}
@@ -38,4 +38,4 @@ const AntSelect = React.createClass({
 AntSelect.Option = Option;
 AntSelect.OptGroup = OptGroup;
 
-export default AntSelect;
+Antd.Select = AntSelect;

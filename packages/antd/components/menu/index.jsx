@@ -1,6 +1,9 @@
-import React from 'react';
-import Menu, { Item, Divider, SubMenu, ItemGroup } from 'rc-menu';
-import animation from '../common/openAnimation';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
+
+const { Item, Divider, SubMenu, ItemGroup } = Menu
+const animation = CommonAnimation
 
 function noop() {
 }
@@ -85,4 +88,4 @@ AntMenu.Item = Item;
 AntMenu.SubMenu = SubMenu;
 AntMenu.ItemGroup = ItemGroup;
 
-export default AntMenu;
+Antd.Menu = AntMenu;

@@ -1,8 +1,10 @@
-import React from 'react';
-import classNames from 'classnames';
-import InputNumber from 'rc-input-number';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
-export default React.createClass({
+const InputNumber = Rc.InputNumber
+
+Antd.InputNumber = React.createClass({
   getDefaultProps() {
     return {
       prefixCls: 'ant-input-number',

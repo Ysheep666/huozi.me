@@ -8,6 +8,17 @@ Notes.attachSchema(new SimpleSchema({
     type: String,
     optional: true,
   },
+  target: {
+    type: Object,
+    optional: true,
+  },
+  'target.type': {
+    type: String,
+  },
+  'target.length': {
+    type: Number,
+    optional: true,
+  },
   createdByUserId: {
     type: String,
   },
