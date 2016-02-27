@@ -65,6 +65,9 @@ Package.onUse(function(api) {
     'components/popconfirm/index.jsx',
     'components/tabs/index.jsx',
     'components/progress/index.jsx',
+    'components/upload/getFileItem.js',
+    'components/upload/uploadList.jsx',
+    'components/upload/index.jsx',
     'components/queue-anim/index.jsx'
   ], 'client');
 
@@ -113,7 +116,7 @@ Npm.depends({
   // 'rc-tree': '1.1.0',
   // 'rc-tree-select': '1.1.1',
   'rc-trigger': '1.1.1',
-  // 'rc-upload': '1.8.0',
+  'rc-upload': '1.8.0',
   'rc-util': '3.1.2',
   'react-slick': '0.9.1',
   'velocity-animate': '1.2.3',

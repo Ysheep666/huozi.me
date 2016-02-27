@@ -25,6 +25,15 @@ body.is-open-comment {
   }
 
   .CodeMirror-line {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      right: -60px;
+      bottom: 0;
+      width: 60px;
+    }
+
     &::after {
       font-family: 'Material Icons';
       font-weight: normal;

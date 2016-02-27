@@ -1,9 +1,10 @@
-import React from 'react';
-import Upload from 'rc-upload';
-import assign from 'object-assign';
-import UploadList from './uploadList';
-import getFileItem from './getFileItem';
-import classNames from 'classnames';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
+
+const Upload = Rc.Upload
+const getFileItem = UploadGetFileItem
+
 const prefixCls = 'ant-upload';
 
 function noop() {
@@ -297,4 +298,4 @@ AntUpload.Dragger = React.createClass({
   }
 });
 
-export default AntUpload;
+Antd.Upload = AntUpload;

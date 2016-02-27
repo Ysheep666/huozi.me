@@ -11,7 +11,7 @@
       border-bottom: 1px solid #eee;
     }
   }
-  
+
   .note-container-header::before {
     content: '';
     display: block;
@@ -32,11 +32,14 @@
     height: 50px;
     width: 100%;
     background: #fff;
-    
 
-    .tools > a {
+
+    .tools .upload {
       display: inline-block;
-      color: #9f9f9f;
+
+      a {
+        color: #9f9f9f;
+      }
 
       i {
         width: 30px;
@@ -44,6 +47,28 @@
         line-height: 30px;
         text-align: center;
       }
+    }
+
+    .ant-upload-list {
+      position: absolute;
+      top: 0;
+      left: 80px;
+    }
+
+    .ant-upload-list-item-done {
+      display: none;
+    }
+
+    .ant-upload-list-item-info .anticon-paper-clip {
+      display: none;
+    }
+
+    .ant-upload-list-item-info .anticon-cross {
+      display: none;
+    }
+
+    .ant-upload-list-item-progress {
+      padding: 0;
     }
   }
 

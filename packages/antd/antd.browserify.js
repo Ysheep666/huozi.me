@@ -20,6 +20,7 @@ Rc = {
   InputNumber: require('rc-input-number'),
   Trigger: require('rc-trigger'),
   Dropdown: require('rc-dropdown'),
+  Upload: require('rc-upload'),
 }
 
 ClassNames = classNames

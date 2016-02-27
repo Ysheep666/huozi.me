@@ -1,9 +1,8 @@
-import React from 'react';
-import Animate from 'rc-animate';
-import Icon from '../icon';
+const {Animate} = Rc
+const {Icon, Progress} = Antd
+const {Line} = Progress
+
 const prefixCls = 'ant-upload';
-import { Line } from '../progress';
-import classNames from 'classnames';
 
 // https://developer.mozilla.org/en-US/docs/Web/API/FileReader/readAsDataURL
 const previewFile = function (file, callback) {
@@ -14,7 +13,7 @@ const previewFile = function (file, callback) {
   reader.readAsDataURL(file);
 };
 
-export default React.createClass({
+UploadList = React.createClass({
   getDefaultProps() {
     return {
       listType: 'text',  // or picture

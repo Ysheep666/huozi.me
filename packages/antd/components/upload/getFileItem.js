@@ -1,4 +1,4 @@
-export default function getFileItem(file, fileList) {
+UploadGetFileItem = function (file, fileList) {
   let matchWay = (!file.uid) ? 'byName' : 'byUid';
   let target = fileList.filter((item) => {
     if (matchWay === 'byName') {

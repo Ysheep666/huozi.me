@@ -9,6 +9,32 @@ class $Editor extends React.Component {
       extraKeys: {Enter: 'newlineAndIndentContinueMarkdownList'}
     })
 
+    this.insertText = (message, content) => {
+      if (content) {
+        this.wildpad.insertTextAtCursor(content)
+      }
+    }
+
+    this.scrollTitle = (message, data) => {
+      let $el, index = 0
+      const headers = this.wildpad.$cmWrapper.find('.cm-header')
+      for (let i = 0; i < headers.length; i++) {
+        const $header = $(headers[i])
+        const el = $header.is('pre') ? $header : $header.closest('pre')
+        if (!($header.text().indexOf('#') < 0)) {
+          if (data.text == el.text().replace(/#/g, '').trim()) {
+            if (data.index == index) {
+              $el = el
+              break
+            } else {
+              index++
+            }
+          }
+        }
+      }
+      $(window).scrollTop($el.position().top + 20)
+    }
+
     const initialize = () => {
       this.wildpad = new StartedPad(this.ref.child(id), codeMirror, {
         userId: Meteor.userId()
@@ -22,18 +48,19 @@ class $Editor extends React.Component {
         PubSub.publish('pad text', this.wildpad.getText())
       })
 
-      PubSub.subscribe('scroll to title', this.handleScrollTitle.bind(this))
+      PubSub.subscribe('insert text', this.insertText)
+      PubSub.subscribe('scroll to title', this.scrollTitle)
     }
 
     this.ref = new Wilddog(Meteor.settings.public.wilddog.url + '/notes')
     if (this.ref.getAuth()) {
       initialize()
     } else {
-      Meteor.call('getWilddogToken', (error, token) => {
+      Meteor.call('getWilddogToken', (error, data) => {
         if (error) {
           Message.error('获取 Token 失败！')
         } else {
-          this.ref.authWithCustomToken(token, (error, authData) => {
+          this.ref.authWithCustomToken(data.token, (error, authData) => {
             if (error) {
               Message.error('登录 Wilddong 失败！')
             } else {
@@ -46,31 +73,12 @@ class $Editor extends React.Component {
   }
   componentWillUnmount() {
     this.wildpad.dispose()
+    PubSub.unsubscribe(this.insertText)
+    PubSub.unsubscribe(this.scrollTitle)
     setTimeout(() => {
       this.wildpad = null
       this.ref = null
     }, 0)
-  }
-  handleScrollTitle(message, data) {
-    let $el, index = 0
-    const headers = this.wildpad.$cmWrapper.find('.cm-header')
-
-    for (let i = 0; i < headers.length; i++) {
-      const $header = $(headers[i])
-      const el = $header.is('pre') ? $header : $header.closest('pre')
-      if (!($header.text().indexOf('#') < 0)) {
-        if (data.text == el.text().replace(/#/g, '').trim()) {
-          if (data.index == index) {
-            $el = el
-            break
-          } else {
-            index++
-          }
-        }
-      }
-    }
-
-    $(window).scrollTop($el.position().top + 20)
   }
   render() {
     return (
