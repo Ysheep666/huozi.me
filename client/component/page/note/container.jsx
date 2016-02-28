@@ -4,6 +4,7 @@ class $NoteContainer extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
+      status: 'edit',
       imageUpload: {host: '', data: {}},
       fileUpload: {host: '', data: {}},
     }
@@ -69,14 +70,14 @@ class $NoteContainer extends React.Component{
     }
   }
   render() {
-    const {note} = this.props
-    const {imageUpload, fileUpload} = this.state
+    const {note, content} = this.props
+    const {status, imageUpload, fileUpload} = this.state
     return (
       <div className="note-container">
         <Affix offset={97} affixClassName="note-container-header">
           <div className="actions">
             <div className="tools">
-              <Upload className="upload"
+              <Upload className="t"
                 action="http://upload.qiniu.com"
                 accept="image/*"
                 data={imageUpload.data}
@@ -86,7 +87,7 @@ class $NoteContainer extends React.Component{
                   <a><i className="material-icons">insert_photo</i></a>
                 </Tooltip>
               </Upload>
-              <Upload className="upload"
+              <Upload className="t"
                 action="http://upload.qiniu.com"
                 data={fileUpload.data}
                 beforeUpload={this.handleBeforeFileUpload.bind(this)}
@@ -95,10 +96,25 @@ class $NoteContainer extends React.Component{
                   <a><i className="material-icons">attach_file</i></a>
                 </Tooltip>
               </Upload>
+              <span className="switch">
+                {status == 'edit' ? (
+                  <Tooltip placement="bottom" title="预览">
+                    <a onClick={(e) => {e.preventDefault();this.setState({status: 'preview'})}}><i className="material-icons">visibility</i></a>
+                  </Tooltip>
+                ) : (
+                  <Tooltip placement="bottom" title="编辑">
+                    <a onClick={(e) => {e.preventDefault();this.setState({status: 'edit'})}}><i className="material-icons">visibility_off</i></a>
+                  </Tooltip>
+                )}
+              </span>
             </div>
           </div>
         </Affix>
-        <Editor note={note}/>
+        {status == 'edit' ? (
+          <Editor note={note}/>
+        ) : (
+          <NotePreview content={content}/>
+        )}
       </div>
     )
   }

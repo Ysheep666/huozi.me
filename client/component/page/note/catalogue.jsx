@@ -24,7 +24,6 @@ class $NoteCatalogue extends React.Component{
         })
 
         item.index = alikes.length
-
         items.push(item)
         if (item.level < left) { left = item.level }
       }

@@ -17,7 +17,7 @@ const $Note = React.createClass({
     document.body.className = 'note-wrap'
     PubSub.subscribe('pad text', this.initializeContent)
   },
-  componentWillUnmount(nextProps) {
+  componentWillUnmount() {
     document.body.className = ''
     PubSub.unsubscribe(this.initializeContent)
   },
@@ -33,7 +33,7 @@ const $Note = React.createClass({
           <div>
             <NoteHeader note={note} location={location}/>
             <div className="inner content">
-              <NoteContainer note={note}/>
+              <NoteContainer note={note} content={this.state.content}/>
               <NoteSidebar note={note} content={this.state.content}/>
             </div>
           </div>

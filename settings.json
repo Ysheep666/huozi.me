@@ -17,14 +17,14 @@
     }]
   },
   "wilddog": {
-    "name": "Started Dev",
-    "url": "https://started-dev.wilddogio.com",
-    "secret": "dVxSsppwdZl8FRvxETnVEOUp6ni56Q2VnMXEEPnQ"
+    "name": "Started Dev0",
+    "url": "https://started-dev0.wilddogio.com",
+    "secret": "XiopQZ2fcbwVTpbwAojYYhesdyrx3ODMQDXo42Mk"
   },
   "public": {
     "wilddog": {
       "name": "Started Dev",
-      "url": "https://started-dev.wilddogio.com"
+      "url": "https://started-dev0.wilddogio.com"
     }
   }
 }

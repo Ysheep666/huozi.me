@@ -81,8 +81,13 @@ class $Editor extends React.Component {
     }, 0)
   }
   render() {
+    const className = ClassNames({
+      [this.props.className]: this.props.className,
+      'editor': true
+    })
+
     return (
-      <div ref="editor" className="editor"></div>
+      <div ref="editor" className={className}></div>
     )
   }
 }
