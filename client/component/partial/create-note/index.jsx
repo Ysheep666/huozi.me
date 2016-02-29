@@ -14,7 +14,16 @@ class $CreateNote extends React.Component {
         if (error) {
           Message.error('新建文档失败，请等待一会再试！')
         } else {
-          this.context.router.replace('/notes/' + result)
+          const {chose} = this.props
+          if (chose.isDefault && chose.label == 'star') {
+            Meteor.call('updateNote', result, {$pull: {stars: Meteor.userId()}})
+          }
+
+          if (!chose.isDefault && chose._id) {
+            Meteor.call('updateUserNote', {'note._id': result, userId: Meteor.userId()}, {$set: {folderId: chose._id}})
+          }
+
+          this.context.router.replace({pathname: '/notes/' + result, state: {backPathname: this.props.location.pathname}})
         }
       })
     }

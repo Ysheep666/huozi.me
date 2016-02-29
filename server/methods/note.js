@@ -4,26 +4,28 @@ Meteor.methods({
       throw new Meteor.Error('invalid-user', '[methods] createNote -> Invalid user')
     }
 
-    return Notes.insert({name, createdByUserId: this.userId})
+    return Notes.insert({
+      name,
+      target: {
+        type: 'about',
+      },
+      createdByUserId: this.userId,
+    })
   },
-  updateNote(id, {name, summary, target}) {
+  updateNote(selector, modifier) {
     if (!this.userId) {
-      throw new Meteor.Error('invalid-user', '[methods] createNote -> Invalid user')
+      throw new Meteor.Error('invalid-user', '[methods] updateNote -> Invalid user')
     }
 
-    if ((name && name == '') || (summary && summary == '')) {
-      throw new Meteor.Error('note-invalid')
+    if (typeof selector !== 'string' || !/[a-zA-Z0-9]{17}/.test(selector)) {
+      throw new Meteor.Error('selector-invalid')
     }
 
-    const note = Notes.findOne(id)
-    if (this.userId != note.createdByUserId && note.authorizedUsers.indexOf(this.userId) < 0) {
+    const note = Notes.findOne(selector)
+    if (!note || (this.userId != note.createdByUserId && note.authorizedUsers.indexOf(this.userId) < 0)) {
       throw new Meteor.Error('note-update-not-allowed', '[methods] updateNote -> Note update not allowed')
     }
 
-    const doc = {}
-    if (name) { doc.name = name }
-    if (summary) { doc.summary = summary }
-    if (target) { doc.target = target }
-    return Notes.update(note._id, {'$set': doc})
+    return Notes.update(selector, modifier)
   },
 })

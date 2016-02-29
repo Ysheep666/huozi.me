@@ -32,7 +32,7 @@ class $NoteHeader extends React.Component{
       return this.setState({edit: false})
     }
 
-    Meteor.call('updateNote', this.props.note._id, {name}, (error) => {
+    Meteor.call('updateNote', this.props.note._id, {$set: {name}}, (error) => {
       if (!error) {
         this.setState({edit: false})
       } else {
@@ -59,7 +59,7 @@ class $NoteHeader extends React.Component{
               </div>
             ) : (
               <div className="edit">
-                <Form onSubmit={this.handleSubmit.bind(this)}>
+                <Form onSubmit={this.handleSubmit.bind(this)} autoComplete="off">
                   <Form.Item>
                     <Input placeholder="请输入标题" onBlur={this.handleSubmit.bind(this)}
                       {...getFieldProps('name', {initialValue: note.name})}

@@ -3,10 +3,14 @@ Meteor.publish('user-note#list', function() {
     return []
   }
   return UserNotes.find({
-    userId: this.userId
+    userId: this.userId,
   }, {
+    sort: {
+      'note.createdAt': -1
+    },
     fields: {
-      note: true
+      folderId: true,
+      note: true,
     }
   })
 })

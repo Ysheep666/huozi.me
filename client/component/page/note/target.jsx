@@ -2,7 +2,11 @@ const {Progress, Dropdown, Icon, Menu, InputNumber, Message} = Antd
 
 class $NoteTarget extends React.Component{
   handleChange(target) {
-    Meteor.call('updateNote', this.props.note._id, {target}, (error) => {
+    const {type, length} = target
+    Meteor.call('updateNote', this.props.note._id, {$set: {
+      'target.type': type,
+      'target.length': length,
+    }}, (error) => {
       if (!error) {
         this.setState({edit: false})
       } else {
@@ -11,29 +15,9 @@ class $NoteTarget extends React.Component{
     })
   }
   render() {
-    const target = this.props.note.target || {type: 'about', length: ''}
+    const target = this.props.note.target
     const targetTypes = [{k: 'about', v: '大约'}, {k: 'least', v: '至少'}, {k: 'most', v: '最多'}]
-    const progressPercent = (!!target.length && target.length > 0) ? this.props.content.length * 100 / target.length : 0
-
-    if (!target.length) {
-      target.length = ''
-    }
-
-    let status = null
-    if (!!target.length && target.length > 0 ) {
-      if (progressPercent < 100) {
-        status = 'start'
-      }
-
-      if ((target.type == 'about' && progressPercent >= 100 && progressPercent < 120) || (target.type == 'least' && progressPercent >= 100) || (target.type == 'most' && progressPercent == 100)) {
-        status = 'done'
-      }
-
-      if ((target.type == 'about' && progressPercent >= 120) || (target.type == 'most' && progressPercent > 100)) {
-        status = 'surplus'
-      }
-    }
-
+    const {status, progressPercent} = Utils.targetStatus(this.props.content.length, target)
     return (
       <div className={ClassNames({
         'note-target': true,

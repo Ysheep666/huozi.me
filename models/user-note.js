@@ -4,6 +4,14 @@ UserNotes.attachSchema(new SimpleSchema({
   userId: {
     type: String,
   },
+  folderId: {
+    type: String,
+    optional: true,
+  },
+  isArchive: {
+    type: Boolean,
+    optional: true,
+  },
   note: {
     type: Object,
   },
@@ -12,6 +20,29 @@ UserNotes.attachSchema(new SimpleSchema({
   },
   'note.name': {
     type: String,
+  },
+  'note.summary': {
+    type: String,
+    optional: true,
+  },
+  'note.target': {
+    type: Object,
+  },
+  'note.target.type': {
+    type: String,
+    allowedValues: ['about', 'least', 'most'],
+  },
+  'note.target.length': {
+    type: Number,
+    optional: true,
+  },
+  'note.target.complete': {
+    type: Number,
+    optional: true,
+  },
+  'note.star': {
+    type: Boolean,
+    optional: true,
   },
   'note.createdAt': {
     type: Date,

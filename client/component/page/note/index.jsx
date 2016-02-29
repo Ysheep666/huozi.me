@@ -14,15 +14,48 @@ const $Note = React.createClass({
     }
   },
   componentWillMount() {
+    this.setContent = (message, content) => {
+      this.setState({content})
+    }
+
     document.body.className = 'note-wrap'
-    PubSub.subscribe('pad text', this.initializeContent)
+    PubSub.subscribe('pad text', this.setContent)
+    this.intervalSaveContent = setInterval(() => {
+      this.handleSaveContent()
+    }, 10000)
   },
   componentWillUnmount() {
+    this.handleSaveContent()
     document.body.className = ''
-    PubSub.unsubscribe(this.initializeContent)
+    PubSub.unsubscribe(this.setContent)
+    clearInterval(this.intervalSaveContent)
   },
-  initializeContent(message, content) {
-    this.setState({content})
+  handleSaveContent() {
+    const modifier = {}, maxLength = 200, content = this.state.content
+
+    let summary = ''
+    if (content.length > maxLength + 10 && content[maxLength] !== '\n') {
+      const index = content.substring(maxLength).indexOf('\n')
+      if (index < 0) {
+        summary = content
+      } else {
+        summary = content.substring(0, maxLength + index)
+      }
+    } else {
+      summary = content
+    }
+
+    if (summary != this.data.note.summary) {
+      modifier.summary = summary
+    }
+
+    if (!this.data.note.target.complete || this.data.note.target.complete != content.length) {
+      modifier['target.complete'] = content.length
+    }
+
+    if (!_.isEmpty(modifier)) {
+      Meteor.call('updateNote', this.data.note._id, {$set: modifier})
+    }
   },
   render() {
     const {location} = this.props

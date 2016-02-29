@@ -1,3 +1,5 @@
+@import '{started:antd}/style/themes/default/index.less';
+
 body {
   -webkit-font-smoothing: antialiased;
 }
@@ -32,4 +34,49 @@ body {
   bottom: 0;
   left: 0;
   overflow: hidden;
+}
+
+.note-smaill-progress {
+  .ant-progress-circle-inner {
+    &::before {
+      content: '';
+      position: absolute;
+      top: 1px;
+      right: 1px;
+      bottom: 1px;
+      left: 1px;
+      z-index: -1;
+      border-radius: 50%;
+      background-color: transparent;
+    }
+  }
+
+
+  .rc-progress-circle-trail {
+    stroke: #c5c5c5;
+  }
+
+  .rc-progress-circle-path {
+    stroke: #333;
+  }
+
+  &.done {
+    .ant-progress-circle-inner::before {
+      background-color: lighten(@success-color, 20%);
+    }
+
+    .rc-progress-circle-path {
+      stroke: @success-color;
+    }
+  }
+
+  &.surplus {
+    .ant-progress-circle-inner::before {
+      background-color: lighten(@error-color, 20%);
+    }
+
+    .rc-progress-circle-path {
+      stroke: @error-color;
+    }
+  }
 }

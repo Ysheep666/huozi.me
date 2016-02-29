@@ -5,9 +5,9 @@ Meteor.publish('note#detail', function(id) {
   return Notes.find({
     _id: id,
     $or: [{
-      createdByUserId: this.userId
+      createdByUserId: this.userId,
     }, {
-      authorizedUsers: {$in: [this.userId]}
+      authorizedUsers: {$in: [this.userId]},
     }]
   })
 })

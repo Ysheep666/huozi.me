@@ -8,10 +8,10 @@ class $DashboardSearch extends React.Component {
   render() {
     return (
       <div className="dashboard-search">
-        <form onSubmit={this.handleSearch.bind(this)}>
+        <div className="dashboard-search-box">
+          <i className="material-icons">search</i>
           <Input type="text" placeholder="搜索文档..."/>
-          <button type="submit"><i className="material-icons">search</i></button>
-        </form>
+        </div>
       </div>
     )
   }

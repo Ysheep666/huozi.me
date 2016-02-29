@@ -5,9 +5,9 @@ Meteor.publish('comment#list', function(id) {
 
   return Comments.find({
     $or: [{
-      _id: id
+      _id: id,
     }, {
-      parentId: id
+      parentId: id,
     }]
   })
 })

@@ -10,14 +10,25 @@ Notes.attachSchema(new SimpleSchema({
   },
   target: {
     type: Object,
-    optional: true,
   },
   'target.type': {
     type: String,
+    allowedValues: ['about', 'least', 'most'],
   },
   'target.length': {
     type: Number,
     optional: true,
+  },
+  'target.complete': {
+    type: Number,
+    optional: true,
+  },
+  stars: {
+    type: Array,
+    optional: true,
+  },
+  'stars.$': {
+    type: String,
   },
   createdByUserId: {
     type: String,
@@ -59,6 +70,7 @@ Notes.after.insert((userId, doc) => {
     note: {
       _id: doc._id,
       name: doc.name,
+      target: doc.target,
       createdAt: doc.createdAt,
       updatedAt: doc.updatedAt,
     }
@@ -66,14 +78,25 @@ Notes.after.insert((userId, doc) => {
 })
 
 Notes.after.update((userId, doc, fieldNames, modifier) => {
+  const _modifier = {}
   if (!(fieldNames.indexOf('name') < 0)) {
-    UserNotes.update({
-      'note._id': doc._id,
-    }, {
-      $set: {
-        'note.name': doc.name,
-        'note.updatedAt': doc.updatedAt,
-      }
-    })
+    _modifier['note.name'] = doc.name
+  }
+
+  if (!(fieldNames.indexOf('summary') < 0)) {
+    _modifier['note.summary'] = doc.summary
+  }
+
+  if (!(fieldNames.indexOf('target') < 0)) {
+    _modifier['note.target'] = doc.target
+  }
+
+  if (!(fieldNames.indexOf('stars') < 0)) {
+    _modifier['note.star'] = !!modifier['$addToSet']
+  }
+
+  if (!_.isEmpty(_modifier)) {
+    _modifier['note.updatedAt'] = doc.updatedAt
+    UserNotes.update({userId: userId, 'note._id': doc._id}, {$set: _modifier})
   }
 })
