@@ -1,8 +1,10 @@
-import Switch from 'rc-switch';
-import React from 'react';
-import classNames from 'classnames';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
-export default React.createClass({
+const {Switch} = Rc
+
+Antd.Switch = React.createClass({
   getDefaultProps() {
     return {
       prefixCls: 'ant-switch',

@@ -33,7 +33,9 @@ const $Profile = React.createClass({
         <TabPane tab="修改密码" key="password">
           <ProfileChangePassword close={this.handleClose} user={this.data.user}/>
         </TabPane>
-        <TabPane tab="消息设置" key="message">消息设置</TabPane>
+        <TabPane tab="消息设置" key="message">
+          <ProfileNoticeSetting close={this.handleClose} user={this.data.user}/>
+        </TabPane>
         <TabPane tab="发布设置" key="publish">发布设置</TabPane>
       </Tabs>
     </Modal>, profileWrap, function() {

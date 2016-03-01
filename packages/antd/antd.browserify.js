@@ -27,6 +27,7 @@ Rc = {
   Radio: require('rc-radio'),
   Calendar: require('rc-calendar'),
   TimePicker: require('rc-time-picker'),
+  Switch: require('rc-switch'),
 }
 
 Rc.Calendar.MonthCalendar = require('rc-calendar/lib/MonthCalendar')

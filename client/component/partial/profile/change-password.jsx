@@ -47,16 +47,13 @@ class $ProfileChangePassword extends React.Component {
   }
   render() {
     const formItemLayout = {labelCol: {span: 8}, wrapperCol: {span: 10}}
-    const {buttonDisabled} = this.state
     const {user} = this.props
+    const {buttonDisabled} = this.state
     const {getFieldProps, getFieldError, isFieldValidating} = this.props.form
     return (
       <div className="profile-change-password">
         <Form horizontal form={this.props.form}>
-          <Form.Item
-            {...formItemLayout}
-            label="当前密码："
-            hasFeedback>
+          <Form.Item label="当前密码：" hasFeedback {...formItemLayout}>
             <Input
               type="password" name="oldPassword" placeholder="当前密码"
               {...getFieldProps('oldPassword', {
@@ -65,10 +62,7 @@ class $ProfileChangePassword extends React.Component {
                 ],
               })}/>
           </Form.Item>
-          <Form.Item
-            {...formItemLayout}
-            label="新密码："
-            hasFeedback>
+          <Form.Item label="新密码：" hasFeedback {...formItemLayout}>
             <Input
               type="password" name="newPassword" placeholder="新密码"
               {...getFieldProps('newPassword', {
@@ -78,10 +72,7 @@ class $ProfileChangePassword extends React.Component {
                 ],
               })}/>
           </Form.Item>
-          <Form.Item
-            {...formItemLayout}
-            label="确认密码："
-            hasFeedback>
+          <Form.Item label="确认密码：" hasFeedback {...formItemLayout}>
             <Input
               type="password" name="verifyPassword" placeholder="确认密码"
               {...getFieldProps('verifyPassword', {
