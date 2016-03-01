@@ -55,8 +55,8 @@ const $DashboardSidebar = React.createClass({
                 <div className="avatar-box loading"></div>
               ) : (
                 <div className="avatar-box">
-                  {user.profile && user.profile.avatarId ? (
-                    <img className="image" src={`\/fs\/files\/avatars\/${user.profile.avatarId}?store=thumbnail`}/>
+                  {user.profile && user.profile.avatar ? (
+                    <img className="image" src={user.profile.avatar + '!avatar'}/>
                   ) : (
                     <div className="text">{user && user.username.substr(0, 1).toLocaleUpperCase()}</div>
                   )}

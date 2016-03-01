@@ -1,13 +1,11 @@
-import React from 'react';
-import Calendar from 'rc-calendar';
-import MonthCalendar from 'rc-calendar/lib/MonthCalendar';
-import DatePicker from 'rc-calendar/lib/Picker';
-import GregorianCalendar from 'gregorian-calendar';
-import CalendarLocale from 'rc-calendar/lib/locale/zh_CN';
-import AntRangePicker from './RangePicker';
-import PickerMixin from './PickerMixin';
-import TimePicker from 'rc-time-picker';
-import classNames from 'classnames';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
+
+const {Calendar, TimePicker} = Rc
+const {MonthCalendar, DatePicker, CalendarLocale} = Calendar
+const AntRangePicker = RcRangePicker
+const PickerMixin = RcPickerMixin
 
 function createPicker(TheCalendar, defaultFormat) {
   return React.createClass({
@@ -151,4 +149,4 @@ AntDatePicker.Calendar = AntCalendar;
 AntDatePicker.RangePicker = AntRangePicker;
 AntDatePicker.MonthPicker = AntMonthPicker;
 
-export default AntDatePicker;
+Antd.DatePicker = AntDatePicker;

@@ -1,7 +1,8 @@
-import Radio from 'rc-radio';
-import React from 'react';
-import classNames from 'classnames';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
+const {Radio} = Rc
 const AntRadio = React.createClass({
   getDefaultProps() {
     return {
@@ -25,4 +26,4 @@ const AntRadio = React.createClass({
   }
 });
 
-export default AntRadio;
+Antd.Radio = AntRadio;

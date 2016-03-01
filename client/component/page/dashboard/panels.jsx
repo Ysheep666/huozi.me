@@ -7,34 +7,34 @@ $DashboardPanels = React.createClass({
     Meteor.subscribe('user-note#list')
     return {
       notes: (() => {
-        let query = {}
-        const {chose} = this.props
-        if (chose.isDefault && chose.label == 'apps') {
-          query = {}
-        }
+        const query = {}
+        const {chose, search} = this.props
 
         if (chose.isDefault && chose.label == 'schedule') {
           const date = moment().subtract(7, 'days').toDate()
-          query = {'note.createdAt': {$gte: date}}
+          query['note.createdAt'] = {$gte: date}
+        } else if (chose.isDefault && chose.label == 'star') {
+          query['note.star'] = true
+        } else if (chose.isDefault && chose.label == 'archive') {
+          query.isArchive = true
+        } else if (!chose.isDefault && chose._id) {
+          query.folderId = chose._id
         }
 
-        if (chose.isDefault && chose.label == 'star') {
-          query = {'note.star': true}
+        if (_.isEmpty(chose) && _.isEmpty(query)) {
+          return []
         }
 
-        if (chose.isDefault && chose.label == 'archive') {
-          query = {'isArchive': true}
+        if (search && search != '') {
+          query['note.name'] = new RegExp(search)
         }
-
-        if (!chose.isDefault && chose._id) { query = {'folderId': chose._id} }
-
-        return _.isEmpty(chose) && _.isEmpty(query) ? [] : UserNotes.find(query).fetch()
+        return UserNotes.find(query).fetch()
       })(),
     }
   },
   render() {
-    const {location, chose} = this.props
     const {notes} = this.data
+    const {location, chose} = this.props
     return (
       <div className="dashboard-panels">
         <QueueAnim>
@@ -70,7 +70,7 @@ $DashboardPanels = React.createClass({
                       'done': progressStatus.status == 'done',
                       'surplus': progressStatus.status == 'surplus',
                     })}>
-                      <Progress.Circle percent={progressStatus.progressPercent > 100 ? 100 : progressStatus.progressPercent} width={18} format={() => null}/>
+                      <Progress.Circle percent={progressStatus.progressPercent > 100 ? 100 : progressStatus.progressPercent} width={18} strokeWidth={8} format={() => null}/>
                     </div>
                   )}
                 </div>

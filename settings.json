@@ -9,6 +9,9 @@
     "access": "0Y9rfHrb6JcI9LC6deEwmVY-16ukkwTNtN0W8gV7",
     "secret": "QPxHOebmwTG-Q2fx9A4vLKU9v7CTR6_Tt0mIEUr-",
     "buckets": [{
+      "name": "started-avatar",
+      "host": "http://7xrdmn.com1.z0.glb.clouddn.com/"
+    }, {
       "name": "started-images",
       "host": "http://7xqq2a.com1.z0.glb.clouddn.com/"
     }, {

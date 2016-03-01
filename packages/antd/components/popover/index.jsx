@@ -1,7 +1,9 @@
-import React from 'react';
-import Tooltip from 'rc-tooltip';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
 const prefixCls = 'ant-popover';
+const {Tooltip} = Rc
 
 const Popover = React.createClass({
   getDefaultProps() {
@@ -57,4 +59,4 @@ const Popover = React.createClass({
   },
 });
 
-export default Popover;
+Antd.Popover = Popover;

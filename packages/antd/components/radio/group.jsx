@@ -1,5 +1,3 @@
-import React from 'react';
-
 function getCheckedValue(children) {
   let checkedValue = null;
   React.Children.forEach(children, (radio) => {
@@ -10,7 +8,7 @@ function getCheckedValue(children) {
   return checkedValue;
 }
 
-export default React.createClass({
+Antd.Radio.Group = React.createClass({
   getDefaultProps() {
     return {
       prefixCls: 'ant-radio-group',

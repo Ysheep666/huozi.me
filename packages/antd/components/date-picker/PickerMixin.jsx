@@ -1,9 +1,7 @@
-import objectAssign from 'object-assign';
-import defaultLocale from './locale/zh_CN';
-import DateTimeFormat from 'gregorian-calendar-format';
-import GregorianCalendar from 'gregorian-calendar';
+const objectAssign = assign
+const defaultLocale = RcDefaultLocale
 
-export default {
+RcPickerMixin = {
   getLocale() {
     // 统一合并为完整的 Locale
     let locale = objectAssign({}, defaultLocale, this.props.locale);

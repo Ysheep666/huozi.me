@@ -2,6 +2,11 @@ const {QueueAnim, Modal} = Antd
 
 const $Dashboard = React.createClass({
   mixins: [ReactMeteorData],
+  getInitialState() {
+    return {
+      search: '',
+    }
+  },
   getMeteorData() {
     const {chose} = this.props.params
     const name = ({
@@ -27,16 +32,21 @@ const $Dashboard = React.createClass({
       chose: Folders.findOne(chose) || {},
     }
   },
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.params.chose != this.props.params.chose) {
+      this.setState({search: ''})
+    }
+  },
   render() {
-    const {location} = this.props
     const {chose} = this.data
+    const {search} = this.state
     return (
       <QueueAnim className="dashboard" animConfig={{opacity:[1, 0]}}>
         <div className="dashboard-wrap" key="dashboard">
           <DashboardSidebar/>
           <div className="content">
-            <DashboardHeader chose={chose}/>
-            <DashboardPanels chose={chose} location={location}/>
+            <DashboardHeader chose={chose} search={search} handleSearchChange={(e) => {this.setState({search: e.target.value})}}/>
+            <DashboardPanels location={this.props.location} chose={chose} search={search}/>
           </div>
           <Modal/>
         </div>

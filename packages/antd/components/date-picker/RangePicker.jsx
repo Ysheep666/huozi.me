@@ -1,12 +1,8 @@
-import React from 'react';
-import GregorianCalendar from 'gregorian-calendar';
-import RangeCalendar from 'rc-calendar/lib/RangeCalendar';
-import DatePicker from 'rc-calendar/lib/Picker';
-import TimePicker from 'rc-time-picker';
-import classNames from 'classnames';
-import PickerMixin from './PickerMixin';
+const {Calendar, TimePicker} = Rc
+const {DatePicker, RangeCalendar} = Calendar
+const PickerMixin = RcPickerMixin
 
-export default React.createClass({
+RcRangePicker = React.createClass({
   getDefaultProps() {
     return {
       defaultValue: [],

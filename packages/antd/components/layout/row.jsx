@@ -1,5 +1,6 @@
-import React from 'react';
-import classNames from 'classnames';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
 const Row = React.createClass({
   propTypes: {
@@ -22,4 +23,4 @@ const Row = React.createClass({
   },
 });
 
-export default Row;
+Antd.Row = Row;

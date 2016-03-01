@@ -1,7 +1,8 @@
-import Row from './row';
-import Col from './col';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
-export {
-  Row,
-  Col,
+Antd.Layout = {
+  Row: Antd.Row,
+  Col: Antd.Col,
 };

@@ -1,5 +1,6 @@
-import React from 'react';
-import classNames from 'classnames';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
 const Col = React.createClass({
   propTypes: {
@@ -25,4 +26,4 @@ const Col = React.createClass({
   },
 });
 
-export default Col;
+Antd.Col = Col;

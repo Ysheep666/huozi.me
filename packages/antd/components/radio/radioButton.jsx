@@ -1,5 +1,4 @@
-import React from 'react';
-import AntRadio from './radio';
+const AntRadio = Antd.Radio
 
 const RadioButton = React.createClass({
   getDefaultProps() {
@@ -14,4 +13,4 @@ const RadioButton = React.createClass({
   }
 });
 
-export default RadioButton;
+Antd.Radio.Button = RadioButton
