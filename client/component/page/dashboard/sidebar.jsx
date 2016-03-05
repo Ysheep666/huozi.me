@@ -7,8 +7,10 @@ const $DashboardSidebar = React.createClass({
     router: React.PropTypes.object.isRequired
   },
   getMeteorData() {
+    Meteor.subscribe('user-folder#list')
     return {
       user: Meteor.user(),
+      folders: UserFolders.find({}, {sort: {'folder.createdAt': -1}}).fetch(),
     }
   },
   handleLogout() {
@@ -21,7 +23,7 @@ const $DashboardSidebar = React.createClass({
     })
   },
   render() {
-    const {user} = this.data
+    const {user, folders} = this.data
     return (
       <div className="dashboard-sidebar">
         <Link to="/" className="brand"><Logo/></Link>
@@ -36,7 +38,8 @@ const $DashboardSidebar = React.createClass({
             </ul>
             <div className="m-y">文件夹<CreateFolder><a href="" className="add-folder"><i className="material-icons">add</i></a></CreateFolder></div>
             <ul className="menu">
-              {user && user.profile && user.profile.folders && user.profile.folders.map((folder, i) => {
+              {folders.map((model, i) => {
+                const {folder} = model
                 return <li key={i}><Link to={'/dashboard/' + folder._id} activeClassName="active"><i className="material-icons">book</i>{folder.name}</Link></li>
               })}
             </ul>

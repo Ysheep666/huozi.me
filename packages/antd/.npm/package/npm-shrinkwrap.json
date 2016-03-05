@@ -286,9 +286,6 @@
     "rc-progress": {
       "version": "1.0.4"
     },
-    "rc-queue-anim": {
-      "version": "0.11.2"
-    },
     "rc-radio": {
       "version": "2.0.0",
       "dependencies": {

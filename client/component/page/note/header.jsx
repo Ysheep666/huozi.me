@@ -34,11 +34,16 @@ class $NoteHeader extends React.Component{
 
     Meteor.call('updateNote', this.props.note._id, {$set: {name}}, (error) => {
       if (!error) {
-        this.setState({edit: false})
+        if (this.status != 'unmount') {
+          this.setState({edit: false})
+        }
       } else {
         Message.error('更改标题失败，请等待一会再试！')
       }
     })
+  }
+  componentWillUnmount() {
+    this.status = 'unmount'
   }
   render() {
     const {edit} = this.state

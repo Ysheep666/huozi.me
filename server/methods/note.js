@@ -1,16 +1,36 @@
 Meteor.methods({
-  createNote(name = '无标题') {
+  createNote(name = '', {state, value}) {
     if (!this.userId) {
       throw new Meteor.Error('invalid-user', '[methods] createNote -> Invalid user')
     }
 
-    return Notes.insert({
+    const note = {
       name,
+      stars: state && state == 'star' ? [this.userId] : [],
       target: {
         type: 'about',
       },
       createdByUserId: this.userId,
-    })
+    }
+
+    const folder = state && state == 'folder' ? Folders.findOne(value) : null
+    if (folder) {
+      note.folderId = folder._id
+      note.authorizedUsers = []
+      if (folder.createdByUserId != this.userId) {
+        note.authorizedUsers.push(folder.createdByUserId)
+      }
+
+      if (folder.authorizedUsers) {
+        for (let i = 0; i < folder.authorizedUsers.length; i++) {
+          if (folder.authorizedUsers[i] != this.userId) {
+            note.authorizedUsers.push(folder.authorizedUsers[i])
+          }
+        }
+      }
+    }
+
+    return Notes.insert(note)
   },
   updateNote(selector, modifier) {
     if (!this.userId) {

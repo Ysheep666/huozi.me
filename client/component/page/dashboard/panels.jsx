@@ -28,7 +28,7 @@ $DashboardPanels = React.createClass({
         if (search && search != '') {
           query['note.name'] = new RegExp(search)
         }
-        return UserNotes.find(query).fetch()
+        return UserNotes.find(query, {sort: {'note.createdAt': -1}}).fetch()
       })(),
     }
   },

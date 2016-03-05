@@ -9,20 +9,22 @@ class $CreateNote extends React.Component {
     e.preventDefault()
     if (!this.state.buttonDisabled) {
       this.setState({buttonDisabled: true})
-      Meteor.call('createNote', (error, result) => {
+
+      const options = {}, {chose} = this.props
+      if (chose.isDefault && chose.label == 'star') {
+        options.state = 'star'
+      }
+
+      if (!chose.isDefault && chose._id) {
+        options.state = 'folder'
+        options.value = chose._id
+      }
+
+      Meteor.call('createNote', '无标题', options, (error, result) => {
         this.setState({buttonDisabled: false})
         if (error) {
           Message.error('新建文档失败，请等待一会再试！')
         } else {
-          const {chose} = this.props
-          if (chose.isDefault && chose.label == 'star') {
-            Meteor.call('updateNote', result, {$pull: {stars: Meteor.userId()}})
-          }
-
-          if (!chose.isDefault && chose._id) {
-            Meteor.call('updateUserNote', {'note._id': result, userId: Meteor.userId()}, {$set: {folderId: chose._id}})
-          }
-
           this.context.router.replace({pathname: '/notes/' + result, state: {backPathname: this.props.location.pathname}})
         }
       })

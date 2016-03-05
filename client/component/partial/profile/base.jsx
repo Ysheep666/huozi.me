@@ -101,10 +101,10 @@ class $ProfileBase extends React.Component {
           <Col span="12">
             <Form form={this.props.form} onSubmit={this.handleSubmit.bind(this)} autoComplete="off">
               <Form.Item label="昵称：">
-                <Input type="text" name="nickname" placeholder="昵称" {...getFieldProps('nickname', {initialValue: user.profile.nickname})}/>
+                <Input type="text" name="nickname" placeholder="昵称" {...getFieldProps('nickname', {initialValue: user.profile && user.profile.nickname ? user.profile.nickname : ''})}/>
               </Form.Item>
               <Form.Item label="性别：">
-                <Radio.Group {...getFieldProps('sex', {initialValue: user.profile.sex || null})}>
+                <Radio.Group {...getFieldProps('sex', {initialValue: user.profile && user.profile.sex ? user.profile.sex : null})}>
                   <Radio value="male">男</Radio>
                   <Radio value="female">女</Radio>
                 </Radio.Group>
@@ -122,7 +122,7 @@ class $ProfileBase extends React.Component {
               <Form.Item label="个性签名：">
                 <Input type="textarea" placeholder="个性签名" name="textarea" rows="3"
                   {...getFieldProps('description', {
-                    initialValue: user.profile.description || '',
+                    initialValue: user.profile && user.profile.description ? user.profile.description : '',
                     rules: [
                       {max: 30, message: '个性签名不能超过 30 个字符'},
                     ],

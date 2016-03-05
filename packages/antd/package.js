@@ -15,6 +15,9 @@ Package.onUse(function(api) {
   api.addFiles([
     'antd.browserify.options.json',
     'antd.browserify.js',
+    'lib/queue-anim/utils.js',
+    'lib/queue-anim/animTypes.js',
+    'lib/queue-anim/QueueAnim.jsx',
     'lib/form/utils.js',
     'lib/form/createForm.jsx',
     'lib/menu/util.js',
@@ -117,7 +120,6 @@ Npm.depends({
   'rc-notification': '1.3.2',
   // 'rc-pagination': '1.4.0',
   'rc-progress': '1.0.4',
-  'rc-queue-anim': '0.11.2',
   'rc-radio': '2.0.0',
   // 'rc-slider': '3.3.0',
   // 'rc-steps': '1.4.1',

@@ -1,6 +1,10 @@
 Notes = new Mongo.Collection('notes')
 
 Notes.attachSchema(new SimpleSchema({
+  folderId: {
+    type: String,
+    optional: true,
+  },
   name: {
     type: String,
   },
@@ -65,15 +69,25 @@ Notes.attachSchema(new SimpleSchema({
 }))
 
 Notes.after.insert((userId, doc) => {
-  UserNotes.insert({
-    userId: userId,
+  const users = [], note = {
+    folderId: doc.folderId,
     note: {
       _id: doc._id,
       name: doc.name,
       target: doc.target,
       createdAt: doc.createdAt,
-      updatedAt: doc.updatedAt,
     }
+  }
+
+  users.push(doc.createdByUserId)
+  if (doc.authorizedUsers && doc.authorizedUsers.length > 0) {
+    for (var i = 0; i < doc.authorizedUsers.length; i++) {
+      users.push(doc.authorizedUsers[i])
+    }
+  }
+
+  _.each(users, (userId) => {
+    UserNotes.insert(Object.assign({}, note, {userId}))
   })
 })
 
