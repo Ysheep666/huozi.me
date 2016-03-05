@@ -105,12 +105,12 @@ Notes.after.update((userId, doc, fieldNames, modifier) => {
     _modifier['note.target'] = doc.target
   }
 
-  if (!(fieldNames.indexOf('stars') < 0)) {
-    _modifier['note.star'] = !!modifier['$addToSet']
-  }
-
   if (!_.isEmpty(_modifier)) {
     _modifier['note.updatedAt'] = doc.updatedAt
-    UserNotes.update({userId: userId, 'note._id': doc._id}, {$set: _modifier})
+    UserNotes.update({'note._id': doc._id}, {$set: _modifier})
+  }
+
+  if (!(fieldNames.indexOf('stars') < 0)) {
+    UserNotes.update({userId: userId, 'note._id': doc._id}, {$set: {'note.star': !!modifier['$addToSet']}})
   }
 })

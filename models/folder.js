@@ -50,6 +50,16 @@ Folders.after.insert((userId, doc) => {
 })
 
 Folders.after.update((userId, doc, fieldNames, modifier) => {
+  const _modifier = {}
+  if (!(fieldNames.indexOf('name') < 0)) {
+    _modifier['folder.name'] = doc.name
+  }
+
+  if (!_.isEmpty(_modifier)) {
+    _modifier['folder.updatedAt'] = doc.updatedAt
+    UserFolders.update({userId: userId, 'folder._id': doc._id}, {$set: _modifier})
+  }
+
   if (!(fieldNames.indexOf('authorizedUsers') < 0)) {
     if (!modifier['$addToSet']) {
       UserFolders.remove({userId: modifier['$pull']['authorizedUsers'], 'folder._id': doc._id})
