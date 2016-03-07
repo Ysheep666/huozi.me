@@ -8,9 +8,6 @@ Meteor.publish('user-note#list', function() {
     sort: {
       'note.createdAt': -1
     },
-    fields: {
-      folderId: true,
-      note: true,
-    }
+    fields: {folderId: true, note: true}
   })
 })

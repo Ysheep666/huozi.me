@@ -24,6 +24,7 @@ Rc = {
   Dropdown: require('rc-dropdown'),
   Upload: require('rc-upload'),
   Radio: require('rc-radio'),
+  Checkbox: require('rc-checkbox'),
   Calendar: require('rc-calendar'),
   TimePicker: require('rc-time-picker'),
   Switch: require('rc-switch'),

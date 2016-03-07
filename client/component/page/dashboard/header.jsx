@@ -69,7 +69,7 @@ class $DashboardHeader extends React.Component {
             <Dropdown overlay={chose.createdByUserId == Meteor.userId() ? (
               <Menu>
                 <Menu.Item><UpdateFolder folder={chose}><a>重命名</a></UpdateFolder></Menu.Item>
-                <Menu.Item>共享</Menu.Item>
+                <Menu.Item><MemberFolder folder={chose}><a>共享</a></MemberFolder></Menu.Item>
                 <Menu.Item><a onClick={this.handleDeleteFolder.bind(this)}>删除文件夹</a></Menu.Item>
               </Menu>
             ) : (

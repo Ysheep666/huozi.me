@@ -1,8 +1,10 @@
-import RcCheckbox from 'rc-checkbox';
-import React from 'react';
-import Group from './Group';
+if (typeof Antd === 'undefined') {
+  Antd = {}
+}
 
-const Checkbox = React.createClass({
+const RcCheckbox = Rc.Checkbox
+
+Antd.Checkbox = React.createClass({
   getDefaultProps() {
     return {
       prefixCls: 'ant-checkbox'
@@ -12,7 +14,3 @@ const Checkbox = React.createClass({
     return <RcCheckbox {...this.props} />;
   }
 });
-
-Checkbox.Group = Group;
-
-export default Checkbox;

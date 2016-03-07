@@ -229,6 +229,9 @@
     "rc-calendar": {
       "version": "5.3.1"
     },
+    "rc-checkbox": {
+      "version": "1.2.0"
+    },
     "rc-dialog": {
       "version": "5.3.2",
       "dependencies": {

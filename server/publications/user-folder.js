@@ -8,8 +8,6 @@ Meteor.publish('user-folder#list', function() {
     sort: {
       'folder.createdAt': -1
     },
-    fields: {
-      folder: true,
-    }
+    fields: {folder: true}
   })
 })

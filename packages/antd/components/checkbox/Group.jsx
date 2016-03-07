@@ -1,7 +1,7 @@
-import React from 'react';
-import Checkbox from './index';
 
-export default React.createClass({
+const {Checkbox} = Antd
+
+Antd.Checkbox.Group = React.createClass({
   getDefaultProps() {
     return {
       options: [],
