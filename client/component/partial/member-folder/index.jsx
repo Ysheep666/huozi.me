@@ -1,8 +1,11 @@
-const {Row, Col, Checkbox, Icon, Input, Button, Modal, Message} = Antd
+const {Row, Col, Checkbox, Icon, Input, Button, Modal, Popconfirm, Message} = Antd
 
 class MemberItem extends React.Component {
   constructor(props) {
     super(props)
+  }
+  handleDeleteMember() {
+    this.props.deleteMember(this.props.user._id)
   }
   render() {
     const {user, manager} = this.props
@@ -29,7 +32,12 @@ class MemberItem extends React.Component {
           {manager ? (
             <Col span="4" className="status">管理员</Col>
           ) : (
-            <Col span="4" className="status">成员</Col>
+            <Col span="4" className="status">
+              <span className="text">成员</span>
+              <Popconfirm title="确认移除成员？" onConfirm={this.handleDeleteMember.bind(this)}>
+                <Icon type="cross-circle" className="button"/>
+              </Popconfirm>
+            </Col>
           )}
         </Row>
       </div>
@@ -63,6 +71,14 @@ const Content = React.createClass({
       users: Users.find().fetch()
     }
   },
+  handleDeleteMember(userId) {
+    const {folder} = this.props
+    Meteor.call('updateFolder', folder._id, {$pull: {authorizedUsers: userId}}, (error, result) => {
+      if (error) {
+        Message.error('移除成员失败，请等待一会再试！')
+      }
+    })
+  },
   handleSearch(e) {
     if (this._search) {
       clearTimeout(this._search)
@@ -94,6 +110,30 @@ const Content = React.createClass({
       this.setState({selectUsers})
     }
   },
+  handleSubmit(e) {
+    e.preventDefault()
+    const {selectUsers, buttonDisabled} = this.state
+    const {folder} = this.props
+    if (!this.state.buttonDisabled && selectUsers.length) {
+      const selectUserIds = _.pluck(selectUsers, '_id')
+      this.setState({buttonDisabled: true})
+      Meteor.call('updateFolder', folder._id, {$addToSet: {
+        authorizedUsers: {
+          $each: selectUserIds
+        }
+      }}, (error, result) => {
+        this.setState({buttonDisabled: false})
+        if (error) {
+          Message.error('共享文件夹失败，请等待一会再试！')
+        } else {
+          this.props.close()
+          setTimeout(() => {
+            this.setState({edit: false, queryUsers: [], selectUsers: []})
+          }, 100)
+        }
+      })
+    }
+  },
   render() {
     const {queryUsers, selectUsers, edit, buttonDisabled} = this.state
     const {users} = this.data
@@ -114,7 +154,7 @@ const Content = React.createClass({
                 </div>
                 <div className="query-users">
                   {queryUsers.map((user, i) => {
-                    if (user._id != folder.createdByUserId && (!folder.authorizedUsers || folder.authorizedUsers.indexOf(user._Id) < 0)) {
+                    if (user._id != folder.createdByUserId && (!folder.authorizedUsers || folder.authorizedUsers.indexOf(user._id) < 0)) {
                       const checked = !(selectUserIds.indexOf(user._id) < 0)
                       return (
                         <div key={i} onClick={this.handleSwitchSelectUser(user)}>
@@ -173,7 +213,7 @@ const Content = React.createClass({
           </div>
           <div className="ant-modal-footer">
             <Button type="ghost" size="large" onClick={() => {this.setState({edit: false, queryUsers: [], selectUsers: []})}}>取消</Button>
-            <Button type="primary" size="large">确定</Button>
+            <Button type="primary" size="large" onClick={this.handleSubmit} disabled={!selectUserIds.length || buttonDisabled}>确定</Button>
           </div>
         </div>
       )
@@ -185,7 +225,12 @@ const Content = React.createClass({
           <div className="ant-modal-title">成员</div>
         </div>
         <div className="members">
-          <MemberItem user={_.find(users, (user) => {return user._id = folder.createdByUserId})} manager={true}/>
+          <MemberItem user={_.find(users, (user) => {return user._id == folder.createdByUserId})} manager={true}/>
+          {users.map((user, i) => {
+            if (user._id != folder.createdByUserId) {
+              return (<MemberItem key={i} user={user} manager={false} deleteMember={this.handleDeleteMember}/>)
+            }
+          })}
         </div>
         <div className="ant-modal-footer">
           <Button type="primary" size="large" onClick={() => {this.setState({edit: true})}}>添加成员</Button>
@@ -195,41 +240,4 @@ const Content = React.createClass({
   },
 })
 
-let memberFolderWrap = null
-class $MemberFolder extends React.Component {
-  constructor(props) {
-    super(props)
-    this.state = {buttonDisabled: false}
-  }
-  handleClose() {
-    ReactDOM.unmountComponentAtNode(memberFolderWrap)
-  }
-  handleMember(e) {
-    e.preventDefault()
-    if (!this.state.buttonDisabled) {
-      if (!memberFolderWrap) {
-        memberFolderWrap = document.createElement('div')
-        document.body.appendChild(memberFolderWrap)
-      }
-
-      const that = this
-      ReactDOM.render(<Modal
-        title="" footer=""
-        width="620" className="modaol-member-folder"
-        visible={true}
-        closable={true}
-        onCancel={this.handleClose}>
-        <Content close={this.handleClose} folder={this.props.folder}/>
-      </Modal>, memberFolderWrap, function() {
-        that.d = this
-      })
-    }
-  }
-  render() {
-    const {children, ...props} = this.props
-    props.onClick = this.handleMember.bind(this)
-    return React.cloneElement(children, props)
-  }
-}
-
-MemberFolder = $MemberFolder
+MemberFolder = Content

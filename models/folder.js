@@ -57,21 +57,35 @@ Folders.after.update((userId, doc, fieldNames, modifier) => {
 
   if (!_.isEmpty(_modifier)) {
     _modifier['folder.updatedAt'] = doc.updatedAt
-    UserFolders.update({userId: userId, 'folder._id': doc._id}, {$set: _modifier})
+    UserFolders.update({'folder._id': doc._id}, {$set: _modifier}, {multi: true})
   }
 
   if (!(fieldNames.indexOf('authorizedUsers') < 0)) {
-    if (!modifier['$addToSet']) {
-      UserFolders.remove({userId: modifier['$pull']['authorizedUsers'], 'folder._id': doc._id})
-    } else {
-      UserFolders.insert({
-        userId: modifier['$addToSet']['authorizedUsers'],
-        folder: {
-          _id: doc._id,
-          name: doc.name,
-          createdAt: doc.createdAt,
+    if (!!modifier['$addToSet']) {
+      if (!!modifier['$addToSet']['authorizedUsers']['$each']) {
+        const users = modifier['$addToSet']['authorizedUsers']['$each']
+        for (let i = 0; i < users.length; i++) {
+          UserFolders.insert({
+            userId: users[i],
+            folder: {
+              _id: doc._id,
+              name: doc.name,
+              createdAt: doc.createdAt,
+            }
+          })
         }
-      })
+      } else {
+        UserFolders.insert({
+          userId: modifier['$addToSet']['authorizedUsers'],
+          folder: {
+            _id: doc._id,
+            name: doc.name,
+            createdAt: doc.createdAt,
+          }
+        })
+      }
+    } else {
+      UserFolders.remove({userId: modifier['$pull']['authorizedUsers'], 'folder._id': doc._id})
     }
   }
 })

@@ -15,6 +15,10 @@ Meteor.methods({
 
     const folder = state && state == 'folder' ? Folders.findOne(value) : null
     if (folder) {
+      if (this.userId != folder.createdByUserId && (!folder.authorizedUsers || folder.authorizedUsers.indexOf(this.userId) < 0)) {
+        throw new Meteor.Error('note-create-not-allowed', '[methods] createNote -> Note create not allowed')
+      }
+
       note.folderId = folder._id
       note.authorizedUsers = []
       if (folder.createdByUserId != this.userId) {

@@ -4,11 +4,19 @@ class $DashboardHeader extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
-      noticeVisible: false
+      noticeVisible: false,
+      memberVisible: false,
     }
   }
   handleNoticeVisibleChange(noticeVisible) {
     this.setState({noticeVisible})
+  }
+  handleMemberOpen(e) {
+    e.preventDefault()
+    this.setState({memberVisible: true})
+  }
+  handleMemberClose() {
+    this.setState({memberVisible: false})
   }
   handleDeleteFolder(e) {
     e.preventDefault()
@@ -51,6 +59,7 @@ class $DashboardHeader extends React.Component {
   }
   render() {
     const {chose, search, handleSearchChange} = this.props
+
     return (
       <div className="dashboard-header">
         <h1><i className="material-icons">{chose.isDefault ? chose.label : 'book'}</i>{chose.name}</h1>
@@ -69,7 +78,7 @@ class $DashboardHeader extends React.Component {
             <Dropdown overlay={chose.createdByUserId == Meteor.userId() ? (
               <Menu>
                 <Menu.Item><UpdateFolder folder={chose}><a>重命名</a></UpdateFolder></Menu.Item>
-                <Menu.Item><MemberFolder folder={chose}><a>共享</a></MemberFolder></Menu.Item>
+                <Menu.Item><a onClick={this.handleMemberOpen.bind(this)}>共享</a></Menu.Item>
                 <Menu.Item><a onClick={this.handleDeleteFolder.bind(this)}>删除文件夹</a></Menu.Item>
               </Menu>
             ) : (
@@ -82,6 +91,9 @@ class $DashboardHeader extends React.Component {
           )}
         </div>
         <DashboardSearch chose={chose} search={search} handleSearchChange={handleSearchChange}/>
+        <Modal title="" footer="" width="620" className="modaol-member-folder" visible={this.state.memberVisible} onCancel={this.handleMemberClose.bind(this)}>
+          <MemberFolder close={this.handleMemberClose.bind(this)} folder={chose}/>
+        </Modal>
       </div>
     )
   }
