@@ -22,15 +22,15 @@ class $DashboardHeader extends React.Component {
     e.preventDefault()
     const that = this
     const {chose} = this.props
-    if (chose.createdByUserId == Meteor.userId()) {
-      if (chose.authorizedUsers && chose.authorizedUsers.length > 0) {
+    if (chose.isAdmin(Meteor.userId())) {
+      if (chose.members && chose.members.length > 1) {
         Message.error('文件夹成员不为空，不能删除该文件夹！')
         return
       }
 
       Modal.confirm({
         title: '确认删除文件夹',
-        content: '删除文件夹文档并不会被删除，是否继续？',
+        content: '删除文件夹文档也将删除，是否继续？',
         onOk() {
           Meteor.call('deleteFolder', chose._id || null, (error) => {
             if (!error) {
@@ -44,7 +44,7 @@ class $DashboardHeader extends React.Component {
     } else {
       Modal.confirm({
         title: '确认退出文件夹共享',
-        content: '退出后将不再共享新建文档，是否继续？',
+        content: '退出后将不再共享文档，是否继续？',
         onOk() {
           Meteor.call('deleteFolder', chose._id || null, (error) => {
             if (!error) {
@@ -59,7 +59,6 @@ class $DashboardHeader extends React.Component {
   }
   render() {
     const {chose, search, handleSearchChange} = this.props
-
     return (
       <div className="dashboard-header">
         <h1><i className="material-icons">{chose.isDefault ? chose.label : 'book'}</i>{chose.name}</h1>
@@ -75,7 +74,7 @@ class $DashboardHeader extends React.Component {
             <a><i className="material-icons">notifications_none</i></a>
           </Popover>
           {!chose.isDefault && (
-            <Dropdown overlay={chose.createdByUserId == Meteor.userId() ? (
+            <Dropdown overlay={chose._id && chose.isAdmin(Meteor.userId()) ? (
               <Menu>
                 <Menu.Item><UpdateFolder folder={chose}><a>重命名</a></UpdateFolder></Menu.Item>
                 <Menu.Item><a onClick={this.handleMemberOpen.bind(this)}>共享</a></Menu.Item>
@@ -92,7 +91,7 @@ class $DashboardHeader extends React.Component {
         </div>
         <DashboardSearch chose={chose} search={search} handleSearchChange={handleSearchChange}/>
         <Modal title="" footer="" width="620" className="modaol-member-folder" visible={this.state.memberVisible} onCancel={this.handleMemberClose.bind(this)}>
-          <MemberFolder close={this.handleMemberClose.bind(this)} folder={chose}/>
+          <MemberFolder visible={this.state.memberVisible} close={this.handleMemberClose.bind(this)} folder={chose}/>
         </Modal>
       </div>
     )

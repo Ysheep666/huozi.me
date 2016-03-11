@@ -1,25 +1,15 @@
-Comments = new Mongo.Collection('comments')
+const Schema = {}
 
-Comments.attachSchema(new SimpleSchema({
-  content: {
+Schema.Comment = new SimpleSchema({
+  userId: {
     type: String,
   },
   parentId: {
     type: String,
     optional: true,
   },
-  user: {
-    type: Object,
-  },
-  'user._id': {
+  content: {
     type: String,
-  },
-  'user.name': {
-    type: String,
-  },
-  'user.avatar': {
-    type: String,
-    optional: true,
   },
   createdAt: {
     type: Date,
@@ -43,4 +33,13 @@ Comments.attachSchema(new SimpleSchema({
       }
     },
   },
-}))
+})
+
+Comments = new Mongo.Collection('comments')
+Comments.attachSchema(Schema.Comment)
+
+Comments.helpers({
+  getUser() {
+    return Users.findOne(this.userId)
+  },
+})

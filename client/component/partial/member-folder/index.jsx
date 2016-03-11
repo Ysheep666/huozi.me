@@ -56,24 +56,21 @@ const Content = React.createClass({
     }
   },
   getMeteorData() {
-    const members = []
     const {folder} = this.props
-
-    members.push(folder.createdByUserId)
-    if (folder.authorizedUsers && folder.authorizedUsers.length > 0) {
-      for (let i = 0; i < folder.authorizedUsers.length; i++) {
-        members.push(folder.authorizedUsers[i])
-      }
-    }
-
-    Meteor.subscribe('user#list', members)
     return {
-      users: Users.find().fetch()
+      users: Users.find({_id: {$in: _.pluck(folder.members, 'userId')}}).fetch()
+    }
+  },
+  componentWillReceiveProps(nextProps) {
+    if (!nextProps.visible) {
+      setTimeout(() => {
+        this.setState({edit: false, queryUsers: [], selectUsers: []})
+      }, 500)
     }
   },
   handleDeleteMember(userId) {
     const {folder} = this.props
-    Meteor.call('updateFolder', folder._id, {$pull: {authorizedUsers: userId}}, (error, result) => {
+    Meteor.call('updateFolder', folder._id, {$pull: {members: {userId}}}, (error, result) => {
       if (error) {
         Message.error('移除成员失败，请等待一会再试！')
       }
@@ -115,11 +112,15 @@ const Content = React.createClass({
     const {selectUsers, buttonDisabled} = this.state
     const {folder} = this.props
     if (!this.state.buttonDisabled && selectUsers.length) {
-      const selectUserIds = _.pluck(selectUsers, '_id')
       this.setState({buttonDisabled: true})
       Meteor.call('updateFolder', folder._id, {$addToSet: {
-        authorizedUsers: {
-          $each: selectUserIds
+        members: {
+          $each: _.map(selectUsers, (user) => {
+            return {
+              userId: user._id,
+              isAdmin: false,
+            }
+          })
         }
       }}, (error, result) => {
         this.setState({buttonDisabled: false})
@@ -154,7 +155,7 @@ const Content = React.createClass({
                 </div>
                 <div className="query-users">
                   {queryUsers.map((user, i) => {
-                    if (user._id != folder.createdByUserId && (!folder.authorizedUsers || folder.authorizedUsers.indexOf(user._id) < 0)) {
+                    if (!_.find(folder.members, (member) => {return member.userId == user._id})) {
                       const checked = !(selectUserIds.indexOf(user._id) < 0)
                       return (
                         <div key={i} onClick={this.handleSwitchSelectUser(user)}>
@@ -184,29 +185,27 @@ const Content = React.createClass({
                 <div className="title">待添加成员</div>
                 <div className="select-users">
                   {selectUsers.map((user, i) => {
-                    if (user._id != folder.createdByUserId && (!folder.authorizedUsers || folder.authorizedUsers.indexOf(user._Id) < 0)) {
-                      return (
-                        <div key={i} onClick={this.handleSwitchSelectUser(user)}>
-                          <div className="avatar">
-                            {!user ? (
-                              <div className="avatar-box loading"></div>
-                            ) : (
-                              <div className="avatar-box">
-                                {user.profile && user.profile.avatar ? (
-                                  <img className="image" src={user.profile.avatar + '!avatar'}/>
-                                ) : (
-                                  <div className="text">{user && user.username.substr(0, 1).toLocaleUpperCase()}</div>
-                                )}
-                              </div>
-                            )}
-                          </div>
-                          <div className="name">{user.profile ? user.profile.nickname : user.username}</div>
-                          <div className="email">{user.emails[0].address}</div>
-                          <div className="status"><Icon type="cross-circle"/></div>
+                    return (
+                      <div key={i} onClick={this.handleSwitchSelectUser(user)}>
+                        <div className="avatar">
+                          {!user ? (
+                            <div className="avatar-box loading"></div>
+                          ) : (
+                            <div className="avatar-box">
+                              {user.profile && user.profile.avatar ? (
+                                <img className="image" src={user.profile.avatar + '!avatar'}/>
+                              ) : (
+                                <div className="text">{user && user.username.substr(0, 1).toLocaleUpperCase()}</div>
+                              )}
+                            </div>
+                          )}
                         </div>
-                      )
-                    }
-                  })}
+                        <div className="name">{user.profile ? user.profile.nickname : user.username}</div>
+                        <div className="email">{user.emails[0].address}</div>
+                        <div className="status"><Icon type="cross-circle"/></div>
+                      </div>
+                    )
+                })}
                 </div>
               </Col>
             </Row>
@@ -225,11 +224,11 @@ const Content = React.createClass({
           <div className="ant-modal-title">成员</div>
         </div>
         <div className="members">
-          <MemberItem user={_.find(users, (user) => {return user._id == folder.createdByUserId})} manager={true}/>
           {users.map((user, i) => {
-            if (user._id != folder.createdByUserId) {
-              return (<MemberItem key={i} user={user} manager={false} deleteMember={this.handleDeleteMember}/>)
-            }
+            const member = _.find(folder.members, (member) => {return member.userId == user._id})
+            return (
+              <MemberItem key={i} user={user} manager={member && member.isAdmin} deleteMember={this.handleDeleteMember}/>
+            )
           })}
         </div>
         <div className="ant-modal-footer">

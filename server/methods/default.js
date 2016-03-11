@@ -1,4 +1,7 @@
 Meteor.methods({
+  searchUser(query) {
+    return UsersIndex.search(query).fetch()
+  },
   getQiniuToken(name = '') {
     const {qiniu} = Meteor.settings
     const bucket = ((function () {

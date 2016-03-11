@@ -4,7 +4,7 @@ const {QueueAnim, Progress} = Antd
 $DashboardPanels = React.createClass({
   mixins: [ReactMeteorData],
   getMeteorData() {
-    Meteor.subscribe('user-note#list')
+    Meteor.subscribe('note#list')
     return {
       notes: (() => {
         const query = {}
@@ -12,9 +12,9 @@ $DashboardPanels = React.createClass({
 
         if (chose.isDefault && chose.label == 'schedule') {
           const date = moment().subtract(7, 'days').toDate()
-          query['note.createdAt'] = {$gte: date}
+          query.createdAt = {$gte: date}
         } else if (chose.isDefault && chose.label == 'star') {
-          query['note.star'] = true
+          query.stars = Meteor.userId()
         } else if (chose.isDefault && chose.label == 'archive') {
           query.isArchive = true
         } else if (!chose.isDefault && chose._id) {
@@ -26,10 +26,10 @@ $DashboardPanels = React.createClass({
         }
 
         if (search && search != '') {
-          query['note.name'] = new RegExp(search)
+          query['name'] = new RegExp(search)
         }
 
-        return UserNotes.find(query, {sort: {'note.createdAt': -1}}).fetch()
+        return Notes.find(query, {sort: {createdAt: -1}}).fetch()
       })(),
     }
   },
@@ -49,8 +49,7 @@ $DashboardPanels = React.createClass({
               </a>
             </CreateNote>
           )}
-          {notes.map((model, i) => {
-            const {note} = model
+          {notes.map((note, i) => {
             const progressStatus = !!note.target.length ? Utils.targetStatus(note.target.complete || 0, note.target) : false
             return (
               <Link className="item" to={{pathname: '/notes/' + note._id, state: {backPathname: location.pathname}}} key={i}>
@@ -59,7 +58,7 @@ $DashboardPanels = React.createClass({
                   <div className="summary">
                     {note.summary}
                   </div>
-                  {note.star && (
+                  {!(note.stars.indexOf(Meteor.userId()) < 0) && (
                     <div className="status">
                       <i className="material-icons">star</i>
                     </div>

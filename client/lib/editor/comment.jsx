@@ -15,17 +15,18 @@ class CommentItem extends React.Component {
   }
   render() {
     const {comment, handleDelete} = this.props
+    const user = comment.getUser()
     return (
-      <div onMouseLeave={this.handleDeleteCancel.bind(this)}>
+      <div className={ClassNames({self: user._id == Meteor.userId(),})} onMouseLeave={this.handleDeleteCancel.bind(this)}>
         <div className="author">
-          {!comment.user.avatar ? (
-            <div className="font"><i className="material-icons">person</i></div>
+          {user.profile && user.profile.avatar ? (
+            <div className="image" style={{backgroundImage: `url(${user.profile.avatar})`}}></div>
           ) : (
-            <div className="image" style={{backgroundImage: `url(${comment.user.avatar})`}}></div>
+            <div className="font"><i className="material-icons">person</i></div>
           )}
         </div>
         <div className="info">
-          <span className="name">{comment.user.name}</span>
+          <span className="name">{user.profile && user.profile.nickname ? user.profile.nickname : user.username}</span>
           <span className="date">{moment(comment.createdAt).fromNow()}</span>
           <div className="delete">
             {this.state.confirm ? (

@@ -8,15 +8,10 @@ Meteor.methods({
       throw new Meteor.Error('content-invalid')
     }
 
-    const user = Meteor.user()
     return Comments.insert({
-      content,
+      userId: this.userId,
       parentId: parentId ? parentId : '',
-      user: {
-        _id: user._id,
-        name: user.profile && user.profile.nickname ? user.profile.nickname : user.username,
-        avatar: user.profile && user.profile.avatar ? user.profile.avatar : ''
-      }
+      content,
     })
   },
   deleteComment(id) {
@@ -25,7 +20,7 @@ Meteor.methods({
     }
 
     const comment = Comments.findOne(id)
-    if (this.userId != comment.user._id) {
+    if (this.userId != comment.userId) {
       throw new Meteor.Error('comment-delete-not-allowed', '[methods] deleteComment -> Comment delete not allowed')
     }
 

@@ -1,5 +1,16 @@
 const Schema = {}
 
+Schema.Notice = new SimpleSchema({
+  email: {
+    type: Boolean,
+    optional: true,
+  },
+  desktop: {
+    type: Boolean,
+    optional: true,
+  },
+})
+
 Schema.Profile = new SimpleSchema({
   nickname: {
     type: String,
@@ -20,6 +31,10 @@ Schema.Profile = new SimpleSchema({
   },
   description : {
     type: String,
+    optional: true,
+  },
+  notice: {
+    type: Schema.Notice,
     optional: true,
   },
 })

@@ -8,10 +8,12 @@ const $Note = React.createClass({
     }
   },
   getMeteorData() {
-    Meteor.subscribe('note#detail', this.props.params.id)
-    return {
-      note: Notes.findOne(this.props.params.id),
-    }
+    const {id} = this.props.params
+    Meteor.subscribe('note#detail', id)
+
+    const note = Notes.findOne(id)
+    const folder = note && note.folderId ? Folders.findOne(note.folderId) : null
+    return {note, folder}
   },
   componentWillMount() {
     this.setContent = (message, content) => {
@@ -20,9 +22,7 @@ const $Note = React.createClass({
 
     document.body.className = 'note-wrap'
     PubSub.subscribe('pad text', this.setContent)
-    this.intervalSaveContent = setInterval(() => {
-      this.handleSaveContent()
-    }, 10000)
+    this.intervalSaveContent = setInterval(() => {this.handleSaveContent()}, 10000)
   },
   componentWillUnmount() {
     this.handleSaveContent()
@@ -31,25 +31,13 @@ const $Note = React.createClass({
     clearInterval(this.intervalSaveContent)
   },
   handleSaveContent() {
-    const modifier = {}, maxLength = 200, content = this.state.content
-
-    let summary = ''
-    if (content.length > maxLength + 10 && content[maxLength] !== '\n') {
-      const index = content.substring(maxLength).indexOf('\n')
-      if (index < 0) {
-        summary = content
-      } else {
-        summary = content.substring(0, maxLength + index)
-      }
-    } else {
-      summary = content
-    }
-
+    const {content} = this.state
+    const modifier = {}, summary = content.substring(0, 200)
     if (summary != this.data.note.summary) {
       modifier.summary = summary
     }
 
-    if (!this.data.note.target.complete || this.data.note.target.complete != content.length) {
+    if (this.data.note.target.length && this.data.note.target.complete != content.length) {
       modifier['target.complete'] = content.length
     }
 
@@ -59,10 +47,11 @@ const $Note = React.createClass({
   },
   render() {
     const {location} = this.props
-    const {note} = this.data
+    const {note, folder} = this.data
+    const isMember = (note && note.isMember(Meteor.userId())) || (folder && folder.isMember(Meteor.userId()))
     return (
       <div className="note">
-        {note && (
+        {isMember && (
           <div>
             <NoteHeader note={note} location={location}/>
             <div className="inner content">

@@ -112,7 +112,7 @@ class $ProfileBase extends React.Component {
               <Form.Item label="出生年月：">
                 <DatePicker
                   {...getFieldProps('birthday', {
-                    initialValue: user.profile && user.profile.birthday ? moment(user.profile.birthday, 'YYYY-MM-DD').toDate() : null,
+                    initialValue: user.profile && user.profile.birthday ? user.profile.birthday : null,
                     rules: [
                       {validator: this.validateBirthday.bind(this)}
                     ]
