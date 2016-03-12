@@ -10,10 +10,7 @@ Meteor.methods({
       target: {
         type: 'about',
       },
-      members: [{
-        userId: this.userId,
-        isAdmin: true,
-      }],
+      members: [],
     }
 
     const folder = state && state == 'folder' ? Folders.findOne(value) : null
@@ -22,6 +19,11 @@ Meteor.methods({
       if (!folder.isMember(this.userId)) {
         throw new Meteor.Error('note-create-not-allowed', '[methods] createNote -> Note create not allowed')
       }
+    } else {
+      note.members = [{
+        userId: this.userId,
+        isAdmin: true,
+      }]
     }
 
     return Notes.insert(note)
@@ -32,7 +34,7 @@ Meteor.methods({
     }
 
     const note = Notes.findOne(id)
-    const folder = note.folderId ? Folders.findOne(note.folderId) : null
+    const folder = note && note.folderId ? Folders.findOne(note.folderId) : null
 
     if (!note.isMember(this.userId) && (!folder || !folder.isMember(this.userId))) {
       throw new Meteor.Error('note-update-not-allowed', '[methods] updateNote -> Note update not allowed')

@@ -36,7 +36,6 @@ const $Profile = React.createClass({
         <TabPane tab="消息设置" key="message">
           <ProfileNoticeSetting close={this.handleClose} user={this.data.user}/>
         </TabPane>
-        <TabPane tab="发布设置" key="publish">发布设置</TabPane>
       </Tabs>
     </Modal>, profileWrap, function() {
       that.d = this

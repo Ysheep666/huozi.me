@@ -19,6 +19,27 @@ Meteor.publishComposite('note#detail', function(id) {
     children: [{
       find(note) {
         return Folders.find({_id: note.folderId}, {limit: 1})
+      },
+      children: [{
+        find(folder) {
+          return Users.find({_id: {$in: _.pluck(folder.members, 'userId')}}, {
+            fields: {
+              emails: true,
+              username: true,
+              profile: true,
+            }
+          })
+        }
+      }]
+    }, {
+      find(note) {
+        return Users.find({_id: {$in: _.pluck(note.members, 'userId')}}, {
+          fields: {
+            emails: true,
+            username: true,
+            profile: true,
+          }
+        })
       }
     }]
   }

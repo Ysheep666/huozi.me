@@ -8,7 +8,26 @@ class MemberItem extends React.Component {
     this.props.deleteMember(this.props.user._id)
   }
   render() {
-    const {user, manager} = this.props
+    const {user, note, folder} = this.props
+
+    let status = ''
+    if (note.isAdmin(user._id) || (folder && folder.isAdmin(user._id))) {
+      status = (<Col span="4" className="status">管理员</Col>)
+    } else if (folder && folder.isMember(user._id)) {
+      status = (<Col span="4" className="status">文件夹成员</Col>)
+    } else if (note.isAdmin(Meteor.userId()) || (folder && folder.isAdmin(Meteor.userId()))) {
+      status =(
+        <Col span="4" className="status">
+          <span className="text">成员</span>
+          <Popconfirm title="确认移除成员？" onConfirm={this.handleDeleteMember.bind(this)}>
+            <Icon type="cross-circle" className="button"/>
+          </Popconfirm>
+        </Col>
+      )
+    } else {
+      status = (<Col span="4" className="status">成员</Col>)
+    }
+
     return (
       <div>
         <Row>
@@ -29,16 +48,7 @@ class MemberItem extends React.Component {
             {user.profile ? user.profile.nickname : user.username}
           </Col>
           <Col span="10">{user.emails[0].address}</Col>
-          {manager ? (
-            <Col span="4" className="status">管理员</Col>
-          ) : (
-            <Col span="4" className="status">
-              <span className="text">成员</span>
-              <Popconfirm title="确认移除成员？" onConfirm={this.handleDeleteMember.bind(this)}>
-                <Icon type="cross-circle" className="button"/>
-              </Popconfirm>
-            </Col>
-          )}
+          {status}
         </Row>
       </div>
     )
@@ -56,9 +66,10 @@ const Content = React.createClass({
     }
   },
   getMeteorData() {
-    const {folder} = this.props
+    const {note, folder} = this.props
+    const memberIds = _.union(_.pluck(note.members, 'userId'), (folder ? _.pluck(folder.members, 'userId') : []))
     return {
-      users: Users.find({_id: {$in: _.pluck(folder.members, 'userId')}}).fetch()
+      users: Users.find({_id: {$in: memberIds}}).fetch()
     }
   },
   componentWillReceiveProps(nextProps) {
@@ -69,8 +80,8 @@ const Content = React.createClass({
     }
   },
   handleDeleteMember(userId) {
-    const {folder} = this.props
-    Meteor.call('updateFolder', folder._id, {$pull: {members: {userId}}}, (error, result) => {
+    const {note} = this.props
+    Meteor.call('updateNote', note._id, {$pull: {members: {userId}}}, (error, result) => {
       if (error) {
         Message.error('移除成员失败，请等待一会再试！')
       }
@@ -110,10 +121,10 @@ const Content = React.createClass({
   handleSubmit(e) {
     e.preventDefault()
     const {selectUsers, buttonDisabled} = this.state
-    const {folder} = this.props
+    const {note} = this.props
     if (!this.state.buttonDisabled && selectUsers.length) {
       this.setState({buttonDisabled: true})
-      Meteor.call('updateFolder', folder._id, {$addToSet: {
+      Meteor.call('updateNote', note._id, {$addToSet: {
         members: {
           $each: _.map(selectUsers, (user) => {
             return {
@@ -125,7 +136,7 @@ const Content = React.createClass({
       }}, (error, result) => {
         this.setState({buttonDisabled: false})
         if (error) {
-          Message.error('共享文件夹失败，请等待一会再试！')
+          Message.error('共享文档失败，请等待一会再试！')
         } else {
           this.setState({edit: false, queryUsers: [], selectUsers: []})
         }
@@ -135,7 +146,7 @@ const Content = React.createClass({
   render() {
     const {queryUsers, selectUsers, edit, buttonDisabled} = this.state
     const {users} = this.data
-    const {folder} = this.props
+    const {note, folder} = this.props
     const selectUserIds = _.pluck(selectUsers, '_id')
 
     if (edit) {
@@ -152,7 +163,7 @@ const Content = React.createClass({
                 </div>
                 <div className="query-users">
                   {queryUsers.map((user, i) => {
-                    if (!folder.isMember(user._id)) {
+                    if (!_.find(folder.members, (member) => {return member.userId == user._id})) {
                       const checked = !(selectUserIds.indexOf(user._id) < 0)
                       return (
                         <div key={i} onClick={this.handleSwitchSelectUser(user)}>
@@ -223,7 +234,7 @@ const Content = React.createClass({
         <div className="members">
           {users.map((user, i) => {
             return (
-              <MemberItem key={i} user={user} manager={folder.isAdmin(user._id)} deleteMember={this.handleDeleteMember}/>
+              <MemberItem key={i} user={user} note={note} folder={folder} deleteMember={this.handleDeleteMember}/>
             )
           })}
         </div>
@@ -235,4 +246,4 @@ const Content = React.createClass({
   },
 })
 
-MemberFolder = Content
+MemberNote = Content

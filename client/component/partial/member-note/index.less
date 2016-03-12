@@ -1,0 +1,157 @@
+.modaol-member-note {
+  .ant-modal-header {
+    margin: -16px -16px 0;
+  }
+
+  .ant-modal-footer {
+    margin: 0 -16px -16px;
+  }
+
+  .avatar {
+    display: block;
+    float: left;
+    margin-right: 8px;
+    width: 24px;
+    height: 24px;
+
+    .avatar-box {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      overflow: hidden;
+
+      &.loading {
+        background-color: #e1e6f0;
+      }
+    }
+
+    .text {
+      width: 100%;
+      height: 100%;
+      line-height: 24px;
+      font-size: 14px;
+      text-align: center;
+      color: #b3b7c7;
+      background-color: #e1e6f0;
+    }
+
+    .image {
+      width: 100%;
+      height: 100%;
+    }
+  }
+
+  .members {
+    margin: 0 -16px;
+    padding: 16px 0;
+    height: 328px;
+    overflow-y: auto;
+
+    > div {
+      padding: 6px 20px;
+      line-height: 24px;
+
+      &:hover {
+        background-color: #f3f3f3;
+
+        .status {
+          text-align: right;
+
+          .text {
+            display: none;
+          }
+
+          .button {
+            display: inline-block;;
+          }
+        }
+      }
+    }
+
+    .status {
+      text-align: right;
+
+      .anticon {
+        font-size: 14px;
+        cursor: pointer;
+      }
+
+      .button {
+        display: none;
+      }
+    }
+  }
+
+  .member-add-box {
+    margin: 0 -16px;
+    height: 328px;
+
+    .row, .col-12 {
+      position: relative;
+      height: 100%;
+    }
+
+    .search {
+      padding: 12px;
+    }
+
+    .primary-content {
+      background-color: #f0f0f0;
+
+      .title {
+        padding: 12px;
+      }
+    }
+  }
+
+  .query-users, .select-users {
+    position: absolute;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    overflow-y: auto;
+
+    > div {
+      padding: 6px 20px;
+      height: 36px;
+      line-height: 24px;
+      cursor: default;
+
+      &:hover {
+        background-color: #f3f3f3;
+      }
+    }
+
+    .name {
+      float: left;
+      width: 64px;
+      margin-right: 12px;
+      overflow: hidden;
+    }
+
+    .email {
+      float: left;
+      width: 130px;
+      margin-right: 12px;
+      overflow: hidden;
+    }
+
+    .status {
+      text-align: right;
+
+      .anticon {
+        font-size: 14px;
+        cursor: pointer;
+      }
+    }
+  }
+
+  .query-users {
+    top: 52px;
+  }
+
+  .select-users {
+    top: 42px;
+  }
+}

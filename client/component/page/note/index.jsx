@@ -53,10 +53,10 @@ const $Note = React.createClass({
       <div className="note">
         {isMember && (
           <div>
-            <NoteHeader note={note} location={location}/>
+            <NoteHeader note={note} folder={folder} location={location}/>
             <div className="inner content">
               <NoteContainer note={note} content={this.state.content}/>
-              <NoteSidebar note={note} content={this.state.content}/>
+              <NoteSidebar note={note} folder={folder} content={this.state.content}/>
             </div>
           </div>
         )}

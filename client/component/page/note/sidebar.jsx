@@ -1,4 +1,4 @@
-const {QueueAnim, Tabs, Message} = Antd
+const {QueueAnim, Tabs, Dropdown, Menu, Message} = Antd
 const {TabPane} = Tabs
 
 class $NoteSidebar extends React.Component{
@@ -19,7 +19,7 @@ class $NoteSidebar extends React.Component{
     })
   }
   render() {
-    const {note} = this.props
+    const {note, folder} = this.props
     return (
       <QueueAnim className="note-sidebar-wrap">
         <div className="note-sidebar" key="note-sidebar">
@@ -30,7 +30,18 @@ class $NoteSidebar extends React.Component{
               ) : (
                 <a onClick={this.handleStar.bind(this)}><i className="material-icons">star_border</i></a>
               )}
-              <a><i className="material-icons">more_vert</i></a>
+              <Dropdown overlay={(
+                <Menu>
+                  <Menu.Item><a>导出</a></Menu.Item>
+                  {note.isAdmin(Meteor.userId()) || (folder && folder.isAdmin(Meteor.userId())) ? (
+                    <Menu.Item><a>归档文档</a></Menu.Item>
+                  ) : (
+                    <Menu.Item><a>退出共享</a></Menu.Item>
+                  )}
+                </Menu>
+              )} trigger={['click']}>
+                <a><i className="material-icons">more_vert</i></a>
+              </Dropdown>
             </div>
           )}>
             <TabPane tab="目标" key="target"><NoteTarget note={this.props.note} content={this.props.content}/></TabPane>

@@ -40,12 +40,8 @@ class $Editor extends React.Component {
         userId: Meteor.userId()
       })
 
-      this.wildpad.on('ready', () => {
-        PubSub.publish('pad text', this.wildpad.getText())
-      })
-
-      this.wildpad.on('synced', () => {
-        PubSub.publish('pad text', this.wildpad.getText())
+      this.wildpad.codeMirror_.on('change', () => {
+        PubSub.publish('pad text', this.wildpad.codeMirror_.getValue().replace(new RegExp('\uE000', 'g'), ''))
       })
 
       PubSub.subscribe('insert text', this.insertText)

@@ -1,9 +1,12 @@
-const {Form, Input, Button, Message} = Antd
+const {Form, Input, Button, Modal, Message} = Antd
 
 class $NoteHeader extends React.Component{
   constructor(props) {
     super(props)
-    this.state = {edit: false}
+    this.state = {
+      edit: false,
+      memberVisible: false,
+    }
   }
   goToBack(e) {
     e.preventDefault()
@@ -42,19 +45,26 @@ class $NoteHeader extends React.Component{
       }
     })
   }
+  handleMemberOpen(e) {
+    e.preventDefault()
+    this.setState({memberVisible: true})
+  }
+  handleMemberClose() {
+    this.setState({memberVisible: false})
+  }
   componentWillUnmount() {
     this.status = 'unmount'
   }
   render() {
     const {edit} = this.state
-    const {note} = this.props
+    const {note, folder} = this.props
     const {getFieldProps} = this.props.form
     return (
       <div className="note-header">
         <div className="inner">
           <a className="back" onClick={this.goToBack.bind(this)}><i className="material-icons">keyboard_backspace</i></a>
           <div className="users">
-            <Button type="primary">分享</Button>
+            <Button type="primary" onClick={this.handleMemberOpen.bind(this)}>分享</Button>
           </div>
           <div className="title" ref="noteTitle">
             {!edit ? (
@@ -74,6 +84,9 @@ class $NoteHeader extends React.Component{
               </div>
             )}
           </div>
+          <Modal title="" footer="" width="620" className="modaol-member-note" visible={this.state.memberVisible} onCancel={this.handleMemberClose.bind(this)}>
+            <MemberNote note={note} folder={folder} visible={this.state.memberVisible} close={this.handleMemberClose.bind(this)}/>
+          </Modal>
         </div>
       </div>
     )
