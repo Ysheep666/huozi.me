@@ -29,10 +29,9 @@ class $DashboardHeader extends React.Component {
       }
 
       Modal.confirm({
-        title: '确认删除文件夹',
-        content: '删除文件夹文档也将删除，是否继续？',
+        title: '确认删除文件夹？',
         onOk() {
-          Meteor.call('deleteFolder', chose._id || null, (error) => {
+          Meteor.call('deleteFolder', chose._id, (error) => {
             if (!error) {
               that.context.router.replace('/dashboard')
             } else {
@@ -40,13 +39,12 @@ class $DashboardHeader extends React.Component {
             }
           })
         }
-      });
+      })
     } else {
       Modal.confirm({
-        title: '确认退出文件夹共享',
-        content: '退出后将不再共享文档，是否继续？',
+        title: '确认退出文件夹共享？',
         onOk() {
-          Meteor.call('deleteFolder', chose._id || null, (error) => {
+          Meteor.call('deleteFolder', chose._id, (error) => {
             if (!error) {
               that.context.router.replace('/dashboard')
             } else {
@@ -54,7 +52,7 @@ class $DashboardHeader extends React.Component {
             }
           })
         }
-      });
+      })
     }
   }
   render() {

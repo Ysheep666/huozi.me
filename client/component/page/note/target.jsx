@@ -15,9 +15,10 @@ class $NoteTarget extends React.Component{
     })
   }
   render() {
-    const target = this.props.note.target
+    const {note, content} = this.props
+    const {target} = note
     const targetTypes = [{k: 'about', v: '大约'}, {k: 'least', v: '至少'}, {k: 'most', v: '最多'}]
-    const {status, progressPercent} = Utils.targetStatus(this.props.content.length, target)
+    const {status, progressPercent} = note.getStatus(content.length)
     return (
       <div className={ClassNames({
         'note-target': true,

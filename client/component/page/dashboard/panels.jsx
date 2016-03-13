@@ -7,7 +7,7 @@ $DashboardPanels = React.createClass({
     Meteor.subscribe('note#list')
     return {
       notes: (() => {
-        const query = {}
+        const query = {isArchive: {$in: [null, false]}}
         const {chose, search} = this.props
 
         if (chose.isDefault && chose.label == 'schedule') {
@@ -39,7 +39,7 @@ $DashboardPanels = React.createClass({
     return (
       <div className="dashboard-panels">
         <QueueAnim>
-          {(!chose.isDefault || chose.label != 'archive') && (
+          {(!chose.isDefault || chose.label != 'archive') ? (
             <CreateNote chose={chose} location={location}>
               <a className="item add-btn">
                 <div className="thumb">
@@ -48,9 +48,9 @@ $DashboardPanels = React.createClass({
                 <div className="title">新建文档</div>
               </a>
             </CreateNote>
-          )}
+          ) : (<span/>)}
           {notes.map((note, i) => {
-            const progressStatus = !!note.target.length ? Utils.targetStatus(note.target.complete || 0, note.target) : false
+            const progressStatus = !!note.target.length ? note.getStatus(note.target.complete || 0) : false
             return (
               <Link className="item" to={{pathname: '/notes/' + note._id, state: {backPathname: location.pathname}}} key={i}>
                 <div className="thumb">
