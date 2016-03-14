@@ -86,7 +86,7 @@ class $NoteSidebar extends React.Component{
 
     menu = (
       <Menu>
-        <Menu.Item><a>导出</a></Menu.Item>
+        <Menu.Item><Export><a>导出</a></Export></Menu.Item>
         {item}
       </Menu>
     )
