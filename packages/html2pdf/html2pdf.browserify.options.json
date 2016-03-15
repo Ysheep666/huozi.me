@@ -1,9 +1,0 @@
-{
-  "transforms": {
-    "exposify": {
-      "global": true,
-      "expose": {
-      }
-    }
-  }
-}
