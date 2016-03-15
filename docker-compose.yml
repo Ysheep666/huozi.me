@@ -1,4 +1,4 @@
-main:
+huozi:
   restart: always
   build: .
   expose:
@@ -8,10 +8,10 @@ main:
   links:
     - mongo
   volumes:
-    - ./:/app
+    - ./:/opt/src
   environment:
     - PORT=3000
-    - MONGO_URL=mongodb://mongo/started
+    - MONGO_URL=mongodb://mongo/huozi
 mongo:
   image: mongo
   ports:

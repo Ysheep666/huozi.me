@@ -163,7 +163,7 @@ const Content = React.createClass({
                 </div>
                 <div className="query-users">
                   {queryUsers.map((user, i) => {
-                    if (!_.find(folder.members, (member) => {return member.userId == user._id})) {
+                    if (!note.isMember(user._id) && (!folder || !folder.isMember(user._id))) {
                       const checked = !(selectUserIds.indexOf(user._id) < 0)
                       return (
                         <div key={i} onClick={this.handleSwitchSelectUser(user)}>
