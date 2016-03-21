@@ -96,7 +96,7 @@ const Content = React.createClass({
       if (!e.target.value) {
         this.setState({queryUsers: []})
       } else {
-        Meteor.call('searchUser', e.target.value, (error, results) => {
+        Meteor.call('searchMember', e.target.value, (error, results) => {
           if (!error) {
             this.setState({queryUsers: results})
           }

@@ -36,7 +36,7 @@ class $ProfileBase extends React.Component {
   uploadPicture(picture) {
     if (picture.file.status == 'done') {
       const {upload} = this.state
-      this.setState({upload: Object.assign({}, upload, {url: upload.host + picture.file.response.key})})
+      this.setState({upload: Object.assign({}, upload, {url: upload.host + '/' + picture.file.response.key})})
     }
   }
   validateBirthday(rule, value, callback) {

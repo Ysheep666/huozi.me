@@ -1,5 +1,5 @@
 Meteor.methods({
-  searchUser(query) {
+  searchMember(query) {
     return UsersIndex.search(query).fetch()
   },
   getQiniuToken(name = '') {

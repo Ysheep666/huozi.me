@@ -36,7 +36,7 @@ class $NoteContainer extends React.Component{
     }
 
     if (image.file.status == 'done') {
-      PubSub.publish('insert text', `![](${this.state.imageUpload.host}${image.file.response.key})`)
+      PubSub.publish('insert text', `![](${this.state.imageUpload.host}/${image.file.response.key})`)
     }
   }
   handleBeforeFileUpload() {
@@ -66,7 +66,7 @@ class $NoteContainer extends React.Component{
     }
 
     if (file.file.status == 'done') {
-      PubSub.publish('insert text', `[${file.file.name}](${this.state.fileUpload.host}${file.file.response.key})`)
+      PubSub.publish('insert text', `[${file.file.name}](${this.state.fileUpload.host}/${file.file.response.key})`)
     }
   }
   render() {

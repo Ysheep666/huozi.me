@@ -71,7 +71,6 @@ ordered-dict@1.0.4
 peerlibrary:assert@0.2.5
 peerlibrary:base-component@0.10.0
 peerlibrary:blaze-components@0.13.0
-pfafman:filesaver@0.2.2
 promise@0.5.1
 raix:eventemitter@0.1.3
 random@1.0.5
@@ -97,6 +96,7 @@ standard-minifiers@1.0.2
 started:antd@0.0.1
 started:codemirror@0.0.1
 started:jwt@0.0.1
+started:metaweblog@0.0.1
 started:moment@0.0.1
 started:pubsub@0.0.1
 started:react-router@0.0.1
