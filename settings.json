@@ -20,7 +20,7 @@
     }]
   },
   "wilddog": {
-    "name": "Started Dev0",
+    "name": "Started Devs",
     "url": "https://started-dev0.wilddogio.com",
     "secret": "XiopQZ2fcbwVTpbwAojYYhesdyrx3ODMQDXo42Mk"
   },
@@ -30,6 +30,7 @@
       "url": "https://started-dev0.wilddogio.com"
     },
     "pandoc": {
+      "name": "Pandoc Server",
       "url": "http://sadne-huozi-converter.daoapp.io"
     }
   }

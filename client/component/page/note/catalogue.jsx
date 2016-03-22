@@ -4,8 +4,7 @@ class $NoteCatalogue extends React.Component{
     this.state = {left: 5, items: []}
   }
   initialize(content) {
-    const converter = new Showdown.converter()
-    const html = converter.makeHtml(content)
+    const html = Markdown(content)
     const hs = html.match(/\<h[1-5].*\>(.*)\<\/h[1-5]\>/gi)
     if (hs) {
       let left = 5

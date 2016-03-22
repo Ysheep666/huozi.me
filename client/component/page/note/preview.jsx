@@ -4,9 +4,7 @@ class $NotePreview extends React.Component{
     this.state = {content: ''}
   }
   initialize(content) {
-    const converter = new Showdown.converter({extensions: ['table']})
-    const html = converter.makeHtml(content)
-    this.setState({content: html})
+    this.setState({content: Markdown(content)})
   }
   componentDidMount() {
     this.initialize(this.props.content)

@@ -18,7 +18,7 @@ jquery@1.11.4
 react@0.14.3
 session@1.1.1
 tracker@1.0.9
-markdown@1.0.5
+perak:markdown@1.0.5
 aldeed:simple-schema@1.5.3
 jparker:crypto-core@0.1.0
 jparker:crypto-base64@0.1.0
