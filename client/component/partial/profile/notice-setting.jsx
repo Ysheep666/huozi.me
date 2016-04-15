@@ -3,7 +3,7 @@ const {Form, Button, Switch, Icon, Message} = Antd
 class $ProfileNoticeSetting extends React.Component {
   constructor(props) {
     super(props)
-    const {notice} = this.props.user.profile
+    const notice = this.props.user.profile ? this.props.user.profile.notice : {}
     this.state = {
       notice: {
         email: notice && notice.email ? notice.email : false,
