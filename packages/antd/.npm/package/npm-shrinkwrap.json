@@ -358,7 +358,7 @@
       }
     },
     "react": {
-      "version": "0.14.7",
+      "version": "0.14.8",
       "dependencies": {
         "envify": {
           "version": "3.4.0",
@@ -397,7 +397,7 @@
               "version": "1.1.0",
               "dependencies": {
                 "js-tokens": {
-                  "version": "1.0.2"
+                  "version": "1.0.3"
                 }
               }
             },
@@ -420,7 +420,7 @@
       }
     },
     "react-dom": {
-      "version": "0.14.7"
+      "version": "0.14.8"
     },
     "react-slick": {
       "version": "0.9.1",
