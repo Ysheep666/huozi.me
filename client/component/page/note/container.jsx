@@ -11,7 +11,7 @@ class $NoteContainer extends React.Component{
   }
   handleBeforeImageUpload() {
     const p = new Promise((resolve, reject) => {
-      Meteor.call('getQiniuToken', 'started-images', (error, data) => {
+      Meteor.call('getQiniuToken', 'huozi-images', (error, data) => {
         if (error) {
           reject(error)
         } else {
@@ -41,7 +41,7 @@ class $NoteContainer extends React.Component{
   }
   handleBeforeFileUpload() {
     const p = new Promise((resolve, reject) => {
-      Meteor.call('getQiniuToken', 'started-files', (error, data) => {
+      Meteor.call('getQiniuToken', 'huozi-files', (error, data) => {
         if (error) {
           reject(error)
         } else {

@@ -14,7 +14,7 @@ class $ProfileBase extends React.Component {
   }
   handleBeforeUpload(file) {
     const p = new Promise((resolve, reject) => {
-      Meteor.call('getQiniuToken', 'started-avatar', (error, data) => {
+      Meteor.call('getQiniuToken', 'huozi-avatar', (error, data) => {
         if (error) {
           reject(error)
         } else {
