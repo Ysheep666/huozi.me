@@ -73,7 +73,7 @@ class $NoteSidebar extends React.Component{
     }
   }
   render() {
-    const {note, folder} = this.props
+    const {note, folder, style} = this.props
 
     let menu = '', item = ''
     if (note.isArchive) {
@@ -92,7 +92,7 @@ class $NoteSidebar extends React.Component{
     )
 
     return (
-      <QueueAnim className="note-sidebar-wrap">
+      <QueueAnim className="note-sidebar-wrap" style={style}>
         <div className="note-sidebar" key="note-sidebar">
           <Tabs defaultActiveKey="target" tabBarExtraContent={(
             <div className="note-sidebar-bar-extra">

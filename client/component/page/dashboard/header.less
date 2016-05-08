@@ -5,6 +5,25 @@
   padding: 0 10px;
   border-bottom: 1px solid #d9d9d9;
 
+  .menu-toggle {
+    float: left;
+    display: none;
+
+    @media (max-width: 900px) {
+      display: block;
+    }
+
+    i {
+      display: block;
+      float: left;
+      width: 40px;
+      line-height: 60px;
+      font-size: 28px;
+      text-align: center;
+      color: #333;
+    }
+  }
+
   h1 {
     float: left;
     margin: 0;
@@ -19,6 +38,10 @@
       line-height: 60px;
       text-align: center;
       color: fade(@primary-color, 40%);
+
+      @media (max-width: 900px) {
+        display: none;
+      }
     }
   }
 
@@ -50,7 +73,7 @@
   }
 
   .ant-popover-inner > div {
-    width: 320px;
+    width: 300px;
   }
 
   .not-found {

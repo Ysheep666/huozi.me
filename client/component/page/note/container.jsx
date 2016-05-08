@@ -70,11 +70,11 @@ class $NoteContainer extends React.Component{
     }
   }
   render() {
-    const {note, content} = this.props
+    const {note, content, offset, style} = this.props
     const {status, imageUpload, fileUpload} = this.state
     return (
-      <div className="note-container">
-        <Affix offset={97} affixClassName="note-container-header">
+      <div className="note-container" style={style}>
+        <Affix offset={offset} affixClassName="note-container-header">
           <div className="actions">
             <div className="tools">
               <Upload className="t"

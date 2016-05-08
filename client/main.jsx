@@ -13,6 +13,10 @@ const isMember = (nextState, replace) => {
 }
 
 Meteor.startup(() => {
+  $('body').on('click', '.menu-open .dashboard-sidebar .menu a, .menu-open .dashboard-wrap .content', () => {
+    $('#render-target').removeClass('menu-open')
+  })
+
   ReactDOM.render((
     <Router history={browserHistory}>
       <Route path="/" component={Welcome}/>

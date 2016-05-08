@@ -4,6 +4,7 @@ const $Note = React.createClass({
   mixins: [ReactMeteorData],
   getInitialState() {
     return {
+      windowWidth: 0,
       content: '',
     }
   },
@@ -20,15 +21,23 @@ const $Note = React.createClass({
       this.setState({content})
     }
 
+    this.setWindowWidth = () => {
+      this.setState({windowWidth: $(window).width()})
+    }
+
     document.body.className = 'note-wrap'
     PubSub.subscribe('pad text', this.setContent)
     this.intervalSaveContent = setInterval(() => {this.handleSaveContent()}, 10000)
+
+    this.setWindowWidth()
+    $(window).bind('resize', this.setWindowWidth)
   },
   componentWillUnmount() {
     this.handleSaveContent()
     document.body.className = ''
     PubSub.unsubscribe(this.setContent)
     clearInterval(this.intervalSaveContent)
+    $(window).unbind('resize', this.setWindowWidth)
   },
   handleSaveContent() {
     const {content} = this.state
@@ -48,15 +57,26 @@ const $Note = React.createClass({
   render() {
     const {location} = this.props
     const {note, folder} = this.data
+    const {windowWidth} = this.state
     const isMember = (note && note.isMember(Meteor.userId())) || (folder && folder.isMember(Meteor.userId()))
+    let containerOffset = 97 , containerStyles = {}, sidebarStyles = {}
+    if (windowWidth > 1276) {
+      containerStyles.width = sidebarStyles.paddingLeft = '752px'
+      sidebarStyles.left = sidebarStyles.right = (windowWidth - 1196) / 2 + 'px'
+    } else if (windowWidth > 900) {
+      containerStyles.width = sidebarStyles.paddingLeft = (windowWidth - 524) + 'px'
+      sidebarStyles.left = sidebarStyles.right = '40px'
+    } else {
+      containerOffset = 80
+    }
     return (
       <div className="note">
         {isMember && (
           <div>
             <NoteHeader note={note} folder={folder} location={location}/>
             <div className="inner content">
-              <NoteContainer note={note} content={this.state.content}/>
-              <NoteSidebar note={note} folder={folder} content={this.state.content} location={location}/>
+              <NoteContainer note={note} content={this.state.content} offset={containerOffset} style={containerStyles}/>
+              <NoteSidebar note={note} folder={folder} content={this.state.content} location={location} style={sidebarStyles}/>
             </div>
           </div>
         )}

@@ -68,6 +68,12 @@
       }
     }
 
+    .row > div {
+      overflow: hidden;
+      white-space: nowrap;
+      text-overflow: ellipsis;
+    }
+
     .status {
       text-align: right;
 
@@ -123,6 +129,12 @@
       }
     }
 
+    .avatar {
+      @media (max-width: 670px) {
+        display: none;
+      }
+    }
+
     .name {
       float: left;
       width: 64px;
@@ -135,6 +147,10 @@
       width: 130px;
       margin-right: 12px;
       overflow: hidden;
+
+      @media (max-width: 670px) {
+        display: none;
+      }
     }
 
     .status {

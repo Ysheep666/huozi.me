@@ -11,6 +11,10 @@ class $DashboardHeader extends React.Component {
   handleNoticeVisibleChange(noticeVisible) {
     this.setState({noticeVisible})
   }
+  handleMenuOpen(e) {
+    e.preventDefault()
+    $('#render-target').addClass('menu-open')
+  }
   handleMemberOpen(e) {
     e.preventDefault()
     this.setState({memberVisible: true})
@@ -59,6 +63,7 @@ class $DashboardHeader extends React.Component {
     const {chose, search, handleSearchChange} = this.props
     return (
       <div className="dashboard-header">
+        <a className="menu-toggle" onClick={this.handleMenuOpen.bind(this)}><i className="material-icons">menu</i></a>
         <h1><i className="material-icons">{chose.isDefault ? chose.label : 'book'}</i>{chose.name}</h1>
         <div className="actions">
           <Popover overlay={(
