@@ -59,15 +59,15 @@ const $Note = React.createClass({
     const {note, folder} = this.data
     const {windowWidth} = this.state
     const isMember = (note && note.isMember(Meteor.userId())) || (folder && folder.isMember(Meteor.userId()))
-    let containerOffset = 97 , containerStyles = {}, sidebarStyles = {}
+    const containerHeaderStyles = {top: '97px'} , containerStyles = {}, sidebarStyles = {}
     if (windowWidth > 1276) {
       containerStyles.width = sidebarStyles.paddingLeft = '752px'
-      sidebarStyles.left = sidebarStyles.right = (windowWidth - 1196) / 2 + 'px'
+      containerHeaderStyles.left = sidebarStyles.left = sidebarStyles.right = (windowWidth - 1196) / 2 + 'px'
     } else if (windowWidth > 900) {
-      containerStyles.width = sidebarStyles.paddingLeft = (windowWidth - 524) + 'px'
-      sidebarStyles.left = sidebarStyles.right = '40px'
+      containerHeaderStyles.width = containerStyles.width = sidebarStyles.paddingLeft = (windowWidth - 524) + 'px'
+      containerHeaderStyles.left = sidebarStyles.left = sidebarStyles.right = '40px'
     } else {
-      containerOffset = 80
+      containerHeaderStyles.top = '80px'
     }
     return (
       <div className="note">
@@ -75,7 +75,7 @@ const $Note = React.createClass({
           <div>
             <NoteHeader note={note} folder={folder} location={location}/>
             <div className="inner content">
-              <NoteContainer note={note} content={this.state.content} offset={containerOffset} style={containerStyles}/>
+              <NoteContainer note={note} content={this.state.content} headerStyle={containerHeaderStyles} style={containerStyles}/>
               <NoteSidebar note={note} folder={folder} content={this.state.content} location={location} style={sidebarStyles}/>
             </div>
           </div>

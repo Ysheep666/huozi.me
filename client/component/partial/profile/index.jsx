@@ -20,11 +20,12 @@ const $Profile = React.createClass({
       document.body.appendChild(profileWrap)
     }
 
+    const windowWidth = $(window).width()
     const that = this
     ReactDOM.render(<Modal
       footer="" width="640" className="modaol-profile"
-      visible={true}
-      closable={true}
+      transitionName={windowWidth < 670 ? 'fade' : 'zoom'}
+      visible={true} closable={true}
       onCancel={this.handleClose}>
       <Tabs defaultActiveKey="base">
         <TabPane tab="个人资料" key="base">

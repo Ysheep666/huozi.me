@@ -22,7 +22,6 @@ Rc = {
   InputNumber: require('rc-input-number'),
   Trigger: require('rc-trigger'),
   Dropdown: require('rc-dropdown'),
-  Upload: require('rc-upload'),
   Radio: require('rc-radio'),
   Checkbox: require('rc-checkbox'),
   Calendar: require('rc-calendar'),

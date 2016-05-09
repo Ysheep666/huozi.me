@@ -34,6 +34,7 @@ reywood:publish-composite@1.4.2
 matteodem:easy-search@2.0.0
 
 # UI components
+fastclick@1.0.7
 mobile-experience@1.0.1
 
 # Account system

@@ -67,12 +67,13 @@ class $CreateFolder extends React.Component {
         document.body.appendChild(createFolderWrap)
       }
 
+      const windowWidth = $(window).width()
       const that = this
       ReactDOM.render(<Modal
         title="新建文件夹" footer=""
         width="360" className="modaol-create-folder"
-        visible={true}
-        closable={true}
+        transitionName={windowWidth < 670 ? 'fade' : 'zoom'}
+        visible={true} closable={true}
         onCancel={this.handleClose}>
         <Content close={this.handleClose} router={this.context.router}/>
       </Modal>, createFolderWrap, function() {

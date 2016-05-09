@@ -2,7 +2,7 @@ if (typeof Antd === 'undefined') {
   Antd = {}
 }
 
-const Upload = Rc.Upload
+const Upload = RcUpload
 const getFileItem = UploadGetFileItem
 
 const prefixCls = 'ant-upload';

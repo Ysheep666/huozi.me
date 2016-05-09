@@ -69,12 +69,13 @@ class $UpdateFolder extends React.Component {
         document.body.appendChild(updateFolderWrap)
       }
 
+      const windowWidth = $(window).width()
       const that = this
       ReactDOM.render(<Modal
         title="重命名文件夹" footer=""
         width="360" className="modaol-update-folder"
-        visible={true}
-        closable={true}
+        transitionName={windowWidth < 670 ? 'fade' : 'zoom'}
+        visible={true} closable={true}
         onCancel={this.handleClose}>
         <Content close={this.handleClose} folder={this.props.folder}/>
       </Modal>, updateFolderWrap, function() {

@@ -4,11 +4,19 @@
   background: #fff;
   box-shadow: 1px 1px 10px #ddd;
 
-  .ant-affix {
-    z-index: 100;
-
+  .affix {
     .actions {
       border-bottom: 1px solid #eee;
+    }
+  }
+
+  .note-container-header {
+    position: fixed;
+    z-index: 101;
+
+    @media (max-width: 900px) {
+      left: 15px;
+      right: 15px;
     }
   }
 
@@ -20,7 +28,6 @@
     left: 0;
     right: 0;
     height: 10px;
-    z-index: 101;
     box-shadow: 1px 1px 10px #ddd;
   }
 
@@ -36,6 +43,8 @@
 
     .tools .t {
       display: inline-block;
+      position: relative;
+      overflow: hidden;
 
       a {
         color: #9f9f9f;
@@ -46,6 +55,16 @@
         height: 30px;
         line-height: 30px;
         text-align: center;
+      }
+
+      input {
+        display: block !important;
+        position: absolute;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        left: 0;
+        opacity: 0;
       }
     }
 

@@ -4,6 +4,7 @@ class $NoteContainer extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
+      scrollTop: 0,
       status: 'edit',
       imageUpload: {host: '', data: {}},
       fileUpload: {host: '', data: {}},
@@ -69,27 +70,38 @@ class $NoteContainer extends React.Component{
       PubSub.publish('insert text', `[${file.file.name}](${this.state.fileUpload.host}/${file.file.response.key})`)
     }
   }
+  componentWillMount() {
+    this.setScrollTop = () => {
+      this.setState({scrollTop: $(window).scrollTop()})
+    }
+    $(window).bind('scroll', this.setScrollTop)
+  }
+  componentWillUnmount() {
+    $(window).unbind('scroll', this.setScrollTop)
+  }
   render() {
-    const {note, content, offset, style} = this.props
-    const {status, imageUpload, fileUpload} = this.state
+    const {note, content, headerStyle, style} = this.props
+    const {scrollTop, status, imageUpload, fileUpload} = this.state
     return (
       <div className="note-container" style={style}>
-        <Affix offset={offset} affixClassName="note-container-header">
+        <div className={scrollTop == 0 ? 'note-container-header' : 'note-container-header affix'} style={headerStyle}>
           <div className="actions">
             <div className="tools">
               <Upload className="t"
                 action="http://upload.qiniu.com"
                 accept="image/*"
                 data={imageUpload.data}
+                notAToClick={true}
                 beforeUpload={this.handleBeforeImageUpload.bind(this)}
                 onChange={this.hendleImageUploadChange.bind(this)}>
                 <Tooltip placement="bottom" title="上传图片">
-                  <a><i className="material-icons">insert_photo</i></a>
+                  <a className="needsclick"><i className="material-icons">insert_photo</i></a>
                 </Tooltip>
               </Upload>
               <Upload className="t"
                 action="http://upload.qiniu.com"
                 data={fileUpload.data}
+                notAToClick={true}
                 beforeUpload={this.handleBeforeFileUpload.bind(this)}
                 onChange={this.hendleFileUploadChange.bind(this)}>
                 <Tooltip placement="bottom" title="上传附件">
@@ -109,7 +121,7 @@ class $NoteContainer extends React.Component{
               </span>
             </div>
           </div>
-        </Affix>
+        </div>
         {status == 'edit' ? (
           <Editor note={note}/>
         ) : (

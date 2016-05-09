@@ -79,7 +79,8 @@ class $Editor extends React.Component {
   render() {
     const className = ClassNames({
       [this.props.className]: this.props.className,
-      'editor': true
+      'editor': true,
+      'needsclick': true,
     })
 
     return (

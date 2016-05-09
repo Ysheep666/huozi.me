@@ -13,6 +13,10 @@ const isMember = (nextState, replace) => {
 }
 
 Meteor.startup(() => {
+  $('body').on('touchstart', '.CodeMirror', (e) => {
+    $(e.target).addClass('needsclick')
+  })
+
   $('body').on('click', '.menu-open .dashboard-sidebar .menu a, .menu-open .dashboard-wrap .content', () => {
     $('#render-target').removeClass('menu-open')
   })

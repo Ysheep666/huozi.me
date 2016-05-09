@@ -4,6 +4,7 @@ class $DashboardHeader extends React.Component {
   constructor(props) {
     super(props)
     this.state = {
+      windowWidth: 0,
       noticeVisible: false,
       memberVisible: false,
     }
@@ -17,7 +18,7 @@ class $DashboardHeader extends React.Component {
   }
   handleMemberOpen(e) {
     e.preventDefault()
-    this.setState({memberVisible: true})
+    this.setState({windowWidth: $(window).width(), memberVisible: true})
   }
   handleMemberClose() {
     this.setState({memberVisible: false})
@@ -26,6 +27,7 @@ class $DashboardHeader extends React.Component {
     e.preventDefault()
     const that = this
     const {chose} = this.props
+    const windowWidth = $(window).width()
     if (chose.isAdmin(Meteor.userId())) {
       if (chose.members && chose.members.length > 1) {
         Message.error('文件夹成员不为空，不能删除该文件夹！')
@@ -34,6 +36,7 @@ class $DashboardHeader extends React.Component {
 
       Modal.confirm({
         title: '确认删除文件夹？',
+        transitionName: windowWidth < 670 ? 'fade' : 'zoom',
         onOk() {
           Meteor.call('deleteFolder', chose._id, (error) => {
             if (!error) {
@@ -47,6 +50,7 @@ class $DashboardHeader extends React.Component {
     } else {
       Modal.confirm({
         title: '确认退出文件夹共享？',
+        transitionName: windowWidth < 670 ? 'fade' : 'zoom',
         onOk() {
           Meteor.call('deleteFolder', chose._id, (error) => {
             if (!error) {
@@ -93,7 +97,7 @@ class $DashboardHeader extends React.Component {
           )}
         </div>
         <DashboardSearch chose={chose} search={search} handleSearchChange={handleSearchChange}/>
-        <Modal title="" footer="" width="620" className="modaol-member-folder" visible={this.state.memberVisible} onCancel={this.handleMemberClose.bind(this)}>
+        <Modal title="" footer="" width="620" className="modaol-member-folder" transitionName={this.state.windowWidth < 670 ? 'fade' : 'zoom'} visible={this.state.memberVisible} onCancel={this.handleMemberClose.bind(this)}>
           <MemberFolder visible={this.state.memberVisible} close={this.handleMemberClose.bind(this)} folder={chose}/>
         </Modal>
       </div>

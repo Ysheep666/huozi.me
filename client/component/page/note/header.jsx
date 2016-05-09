@@ -4,6 +4,7 @@ class $NoteHeader extends React.Component{
   constructor(props) {
     super(props)
     this.state = {
+      windowWidth: 0,
       edit: false,
       memberVisible: false,
     }
@@ -47,7 +48,7 @@ class $NoteHeader extends React.Component{
   }
   handleMemberOpen(e) {
     e.preventDefault()
-    this.setState({memberVisible: true})
+    this.setState({windowWidth: $(window).width(), memberVisible: true})
   }
   handleMemberClose() {
     this.setState({memberVisible: false})
@@ -84,8 +85,8 @@ class $NoteHeader extends React.Component{
               </div>
             )}
           </div>
-          <Modal title="" footer="" width="620" className="modaol-member-note" visible={this.state.memberVisible} onCancel={this.handleMemberClose.bind(this)}>
-            <MemberNote note={note} folder={folder} visible={this.state.memberVisible} close={this.handleMemberClose.bind(this)}/>
+          <Modal title="" footer="" width="620" className="modaol-member-note" transitionName={this.state.windowWidth < 670 ? 'fade' : 'zoom'} visible={this.state.memberVisible} onCancel={this.handleMemberClose.bind(this)}>
+            <MemberNote note={note} folder={folder} visible={this.state.memberVisible}  close={this.handleMemberClose.bind(this)}/>
           </Modal>
         </div>
       </div>

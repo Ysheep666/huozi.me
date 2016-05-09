@@ -109,7 +109,7 @@ ModalConfirm = function (config) {
     visible
     closable={false}
     title=""
-    transitionName="zoom"
+    transitionName={props.transitionName || 'zoom'}
     footer=""
     maskTransitionName="fade" width={width}>
     <div style={{ zoom: 1, overflow: 'hidden' }}>{body} {footer}</div>
