@@ -62,7 +62,8 @@ const $Note = React.createClass({
     const containerHeaderStyles = {top: '97px'} , containerStyles = {}, sidebarStyles = {}
     if (windowWidth > 1276) {
       containerStyles.width = sidebarStyles.paddingLeft = '752px'
-      containerHeaderStyles.left = sidebarStyles.left = sidebarStyles.right = (windowWidth - 1196) / 2 + 'px'
+      containerHeaderStyles.left = 'initial'
+      sidebarStyles.left = sidebarStyles.right = (windowWidth - 1196) / 2 + 'px'
     } else if (windowWidth > 900) {
       containerHeaderStyles.width = containerStyles.width = sidebarStyles.paddingLeft = (windowWidth - 524) + 'px'
       containerHeaderStyles.left = sidebarStyles.left = sidebarStyles.right = '40px'
